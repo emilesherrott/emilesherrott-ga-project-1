@@ -1,12 +1,106 @@
+/* MAIN ELEMENTS */
 body {
   background-color: #ffbbbb;
   font-family: 'Press Start 2P', cursive;
 }
-h1 {
-  text-align: center;
-  margin-top: auto;
-  margin-bottom: auto;
+main {
+  display: flex;
+  flex-direction: column;
+  padding-left: 200px
 }
+h1 {
+  margin: 10px 0;
+}
+.grid-wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+.grid {
+  max-width: 448px;
+  min-width: 448px;
+  max-height: 496px;
+  min-height: 496px;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: center;
+  align-content: center;
+}
+.grid-piece {
+  max-width: 16px;
+  min-width: 16px;
+  max-height: 16px;
+  min-height: 16px;
+  font-size: 5px;
+  font-family:'Courier New', Courier, monospace
+}
+
+
+/* SUB ELEMENTS */
+#current-score {
+  padding-right: 1em;
+}
+#info-element {
+  display: inline-block;
+  padding-left: 30px;
+  max-width: 300px;
+}
+
+
+/* GRID FEATURES */
+.empty-background {
+  background-color: aliceblue;
+}
+.wall {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.enemy-wall {
+  background-color: #aa1111;
+}
+.enemy-gate {
+  background-color: burlywood;
+}
+
+
+/* GAME CHARACTERS */
+.character {
+  background-color: black;
+}
+.enemyOne {
+  background-color: white;
+}
+
+
+/* SCORE ITEMS */
+.surface {
+  background-color: gold;
+}
+.energizer {
+  background-color:chartreuse;
+}
+
+
+/* BONUS ITEMS */
+.piggy-bank {
+  background-color: orange;
+}
+.isa {
+  background-color: indigo;
+}
+.bonds {
+  background-color: darkgreen;
+}
+.property {
+  background-color: navy;
+}
+
+
+
+
+
+
+/* AUDIO */
 .sound {
   position: absolute;
   top: 16px;
@@ -22,105 +116,4 @@ h1 {
   background-color: goldenrod;
   height: 32px;
   width: 32px;
-}
-
-.scoreboard {
-  display: flex;
-  justify-content: center;
-}
-#current-score {
-  padding-right: 1em;
-}
-.grid-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.grid {
-  width: 448px;
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  height: 100%;
-  justify-content: center;
-  align-content: center;
-}
-h2 {
-  padding-top: 50px;
-  line-height: 3em;
-    text-align: center;
-}
-h3 {
-  position: absolute;
-  top: 100px;
-  right: 40px;
-  width: 200px;
-}
-.grid-piece {
-  width: 16px;
-  height: 16px;
-  font-size: 5px;
-  font-family:'Courier New', Courier, monospace
-}
-.empty {
-  background-color: aliceblue;
-}
-
-.character {
-  background-color: black;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-
-
-.surface {
-  background-color: gold;
-}
-
-.empty-background {
-  background-color: aliceblue;
-}
-
-.wall {
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.enemy-wall {
-  background-color: #aa1111;
-}
-
-.enemy-gate {
-  background-color: burlywood;
-}
-
-.energizer {
-  background-color:chartreuse;
-}
-.enemyOne {
-  background-color: white;
-}
-
-
-
-
-
-
-
-/*  */ RandomItemSpawn
-
-.piggy-bank {
-  background-color: hotpink;
-}
-
-.isa {
-  background-color: indigo;
-}
-
-.bonds {
-  background-color: darkgreen;
-}
-
-.property {
-  background-color: navy;
 }

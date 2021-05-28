@@ -1,27 +1,29 @@
 function init() {
 
-
-  const topContainer = document.querySelector('.top-container')
-  const wrapper = document.querySelector('.grid-wrapper')
+  //*MAIN DOM ELEMENTS
+  const main = document.querySelector('main')
+  const gridWrapper = document.querySelector('.grid-wrapper')
   const grid = document.querySelector('.grid')
   const currentScore = document.querySelector('#current-score')
   const highScore = document.querySelector('high-score')
-  const collectEnergizer = new Audio('music/collect-energizer.wav')
-  const mainAudio = new Audio('music/background.mp3')
+  const infoElement = document.querySelector('#info-element')
+
+
+  //*AUDIO FUNCTIONALITY
   const audioButton = document.querySelector('.sound')
+  const mainAudio = new Audio('music/background.mp3')
+  const collectEnergizer = new Audio('music/energize.wav')
+  const collectBonus = new Audio('music/bonus.wav')
+
+
+  //*GRID CREATION
   const width = 28
   const height = 31
   const cellCount = width * height
-
   const cells = []
 
   let score = 0
   currentScore.innerText = score
-
-
-  const characterStartPosition = 657
-  let characterCurrentPosition = 657
-  let characterClass = 'character'
 
   function createGrid(characterStartPosition) {
     for (let i = 0; i < cellCount; i++) {
@@ -34,6 +36,15 @@ function init() {
     addCharacter(characterStartPosition)
   }
 
+  //*MAIN CHARACTER LOGIC - INITIALISING
+  const characterStartPosition = 657
+  let characterCurrentPosition = 657
+  let characterClass = 'character'
+
+
+  //*CREATE GRID NEEDS TO BE CALLED FOLLOWING CHARACTER INITIALISING (VARIABLES CAN'T BE HOISTED)
+  createGrid(characterStartPosition)
+
 
 
   function addCharacter(position) {
@@ -44,19 +55,14 @@ function init() {
   }
 
 
-
-  //* Move Character Function
+  //*MAIN CHARACTER LOGIC // CONTINUED - MOVEMENT
   function characterMove(event) {
     const key = event.keyCode
     removeCharacter(characterCurrentPosition)
     if (key === 39 && characterCurrentPosition % width !== width - 1 && !cells[characterCurrentPosition + 1].classList.contains('wall')) {
       characterCurrentPosition++
-    } else if (key === 39 && characterCurrentPosition === 419) {
-      characterCurrentPosition = 392
     } else if (key === 37 && characterCurrentPosition % width !== 0 && !cells[characterCurrentPosition - 1].classList.contains('wall')) {
       characterCurrentPosition--
-    } else if (key === 37 && characterCurrentPosition === 392) {
-      characterCurrentPosition = 419
     }
     else if (key === 38 && characterCurrentPosition >= width && !cells[characterCurrentPosition - width].classList.contains('wall')) {
       characterCurrentPosition -= width
@@ -67,151 +73,309 @@ function init() {
   }
 
 
-  //*ClearingMap Fucntionality
-
-
+  //*ADDING POINTS & REMOVING CLASS
+  //*ENERGIZERS
+  //*INITIALLY HAD THIS FUNCTION TO FIRE SET TO KEYDOWN AND ONLY REGISTERED  AFTER PASSED ENERGIZER
   function energize() {
-    const key = event.keyCode
-    if (key === 39 && gridItems.item(characterCurrentPosition + 1).classList.contains('energizer')) {
-      gridItems.item(characterCurrentPosition + 1).classList.remove('energizer')
-      collectEnergizer.play()
-      score += 90
-    } else if (key === 37 && gridItems.item(characterCurrentPosition - 1).classList.contains('energizer')) {
-      gridItems.item(characterCurrentPosition - 1).classList.remove('energizer')
-      collectEnergizer.play()
-      score += 90
-    } else if (key === 38 && gridItems.item(characterCurrentPosition - width).classList.contains('energizer')) {
-      gridItems.item(characterCurrentPosition - width).classList.remove('energizer')
-      collectEnergizer.play()
-      score += 90
-    } else if (key === 40 && gridItems.item(characterCurrentPosition + width).classList.contains('energizer')) {
-      gridItems.item(characterCurrentPosition + width).classList.remove('energizer')
+    if (cells[characterCurrentPosition].classList.contains('energizer')) {
+      cells[characterCurrentPosition].classList.remove('energizer')
       collectEnergizer.play()
       score += 90
     }
     currentScore.innerText = score
   }
-
-
+  //*COINS
   function coin() {
-    const key = event.keyCode
-    if (key === 39 && gridItems.item(characterCurrentPosition + 1).classList.contains('surface')) {
-      gridItems.item(characterCurrentPosition + 1).classList.remove('surface')
-      score += 10
-    } else if (key === 37 && gridItems.item(characterCurrentPosition - 1).classList.contains('surface')) {
-      gridItems.item(characterCurrentPosition - 1).classList.remove('surface')
-      score += 10
-    } else if (key === 38 && gridItems.item(characterCurrentPosition - width).classList.contains('surface')) {
-      gridItems.item(characterCurrentPosition - width).classList.remove('surface')
-      score += 10
-    } else if (key === 40 && gridItems.item(characterCurrentPosition + width).classList.contains('surface')) {
-      gridItems.item(characterCurrentPosition + width).classList.remove('surface')
+    if (cells[characterCurrentPosition].classList.contains('surface')) {
+      cells[characterCurrentPosition].classList.remove('surface')
       score += 10
     }
     currentScore.innerText = score
   }
 
-  window.addEventListener('load', enemyOneBoxOut)
-  document.addEventListener('keydown', coin)
-  document.addEventListener('keydown', energize)
-  document.addEventListener('keydown', characterMove)
-  createGrid(characterStartPosition)
-  const gridItems = document.querySelectorAll('.grid-piece')
 
 
-  //*RandonItemSpawn
+  //*RANDOM ITEM SPAWN & ARRAY FACTS
   function bonusItem() {
-    const itemSpawnList = ['pippgy-bank', 'isa', 'bonds', 'property']
-    let choice = Math.floor(Math.random() * 4)
-    let randomChoice = itemSpawnList[choice]
-    if ((!gridItems[461].classList.contains('piggy-bank')) ||
-      (!gridItems[461].classList.contains('isa')) ||
-      (!gridItems[461].classList.contains('bonds')) ||
-      (!gridItems[461].classList.contains('property'))) {
-      gridItems[461].classList.add(randomChoice)
+    const bonusArray = ['piggy-bank', 'isa', 'bonds', 'property']
+    let randomChoice = bonusArray[Math.floor(Math.random() * 4)]
+    if (cells[461].classList.length <= 1) {
+      cells[461].classList.add(randomChoice)
     }
   }
+  setInterval(bonusItem, 6000)
 
+
+  function removeBonus(bonusName) {
+    cells[461].classList.remove(bonusName)
+    score += 30
+    collectBonus.play()
+  }
   function bonusPoints() {
     let choice = Math.floor(Math.random() * 3)
-    if (characterCurrentPosition === 461 && gridItems.item(461).classList.contains('piggy-bank')) {
-      gridItems.item(461).classList.remove('piggy-bank')
-      score += 30
-      console.log('piggy')
+
+    if (characterCurrentPosition === 461 && cells[461].classList.contains('piggy-bank')) {
+      removeBonus('piggy-bank')
       const piggyBankFacts = ['The earliest known \'piggy-shaped\' money box dates back to the 12th century on the island of Java.', 'The most famous piggy-bank is Hamm from Toy Story.', 'Some piggy banks have to be SMASHED to gain access... this isn\'t very economical.']
-      let piggyBankAppend = document.createElement('h3')
-      piggyBankAppend.innerText = piggyBankFacts[choice]
-      topContainer.removeChild()
-      topContainer.appendChild(piggyBankAppend)
+      infoElement.innerText = piggyBankFacts[choice]
 
-    } else if (characterCurrentPosition === 461 && gridItems.item(461).classList.contains('isa')) {
-      gridItems.item(461).classList.remove('isa')
-      score += 40
-      console.log('isa')
+    } else if (characterCurrentPosition === 461 && cells[461].classList.contains('isa')) {
+      cells[461].classList.remove('isa')
+      removeBonus('isa')
       const isaFacts = ['Interest earned on all Cash ISA Savings are 100% tax free.', 'You need to be at least 16 years old to have an ISA.', 'Since ISAs were  launched in 1999 an estimated £8.74 trillion has been saved.']
-      let isaAppend = document.createElement('h3')
-      isaAppend.innerText = isaFacts[choice]
-      topContainer.removeChild()
-      topContainer.appendChild(isaAppend)
+      infoElement.innerText = isaFacts[choice]
 
-    } else if (characterCurrentPosition === 461 && gridItems.item(461).classList.contains('bonds')) {
-      gridItems.item(461).classList.remove('bonds')
-      score += 60
-      console.log('bonds')
+    } else if (characterCurrentPosition === 461 && cells[461].classList.contains('bonds')) {
+      cells[461].classList.remove('bonds')
+      removeBonus('bonds')
       const bondsFacts = ['Bonds are issued by governments and corporations when they want to raise money.', 'Bonds move in the opposite direction to interest rates.', 'Bonds tend to be relatively safe but of course still come with risk.']
-      let bondsAppend = document.createElement('h3')
-      bondsAppend.innerText = bondsFacts[choice]
-      topContainer.removeChild()
-      topContainer.appendChild(bondsAppend)
-
-    } else if (characterCurrentPosition === 461 && gridItems.item(461).classList.contains('property')) {
-      gridItems.item(461).classList.remove('property')
-      score += 150
-      console.log('property')
+      infoElement.innerText = bondsFacts[choice]
+    } else if (characterCurrentPosition === 461 && cells[461].classList.contains('property')) {
+      removeBonus('property')
+      cells[461].classList.remove('property')
       const propertyFacts = ['London\'s average house price is £476,800. More than double the national average.', 'Liverpool has the cheapest average price for a UK city, with prices averaging £122,300.', 'Lloyds Banking Group and Nationwide Building Society retained their crowns and the first and second biggest BTL mortgage lenders in the UK.']
-      let propertyAppend = document.createElement('h3')
-      propertyAppend.innerText = propertyFacts[choice]
-      topContainer.removeChild()
-      topContainer.appendChild(propertyAppend)
-
+      infoElement.innerText = propertyFacts[choice]
     }
   }
 
 
-  document.addEventListener('keydown', bonusPoints)
-  let randomTime = Math.floor(Math.random() * 60000)
-  setInterval(bonusItem, randomTime)
 
 
 
 
 
-  //*EndGameLogic
+
+
+
+
+
+
+
+  //*Enemy Logic
+
+
+
+
+  function loadEnemies(enemyOneStartPosition) {
+    addEnemyOne(enemyOneStartPosition)
+  }
+
+
+  const enemyOneStartPosition = 376
+  let enemyOneCurrentPosition = 376
+  let enemyOneClass = 'enemyOne'
+
+
+  function addEnemyOne(position) {
+    cells[position].classList.add(enemyOneClass)
+  }
+  function removeEnemyOne(position) {
+    cells[position].classList.remove(enemyOneClass)
+  }
+
+
+  //*Move Enemey
+  function enemyOneBoxOut() {
+
+    const inBox = setInterval(() => {
+
+      const enemyWallsTopBottomRight = cells[enemyOneCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition + 1].classList.contains('enemy-wall')
+      const enemyWallsTopBottomLeft = cells[enemyOneCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition - 1].classList.contains('enemy-wall')
+      const enemyWallsBottom = cells[enemyOneCurrentPosition + width].classList.contains('enemy-wall')
+      const enemyWallsGateCurrent = cells[enemyOneCurrentPosition].classList.contains('enemy-gate')
+      const enemyWallsGateBottom = cells[enemyOneCurrentPosition + width].classList.contains('enemy-gate')
+      const wallsTopBottomRight = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition + 1].classList.contains('wall')
+      const wallsTopRight = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition + 1].classList.contains('wall')
+      const wallsTopBottomLeft = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
+      const wallsBottomRight = cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition + 1].classList.contains('wall')
+      const wallsTopLeft = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
+      const wallsBottomLeft = cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
+      const wallsTop = cells[enemyOneCurrentPosition - width].classList.contains('wall')
+      const wallsBottom = cells[enemyOneCurrentPosition + width].classList.contains('wall')
+      const wallsTopBottom = cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition + width].classList.contains('wall')
+      const wallsRight = cells[enemyOneCurrentPosition + 1].classList.contains('wall')
+      const wallsLeft = cells[enemyOneCurrentPosition - 1].classList.contains('wall')
+      const wallsRightLeft = cells[enemyOneCurrentPosition + 1].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
+
+      if (enemyWallsGateBottom) {
+        clearInterval(inBox)
+      }
+
+      removeEnemyOne(enemyOneCurrentPosition)
+
+
+      if (enemyWallsTopBottomLeft) {
+        enemyOneCurrentPosition += 1
+      }
+      else if (enemyWallsTopBottomRight) {
+        enemyOneCurrentPosition -= 1
+      }
+      else if (enemyWallsBottom) {
+        enemyOneCurrentPosition -= width
+      }
+      else if (enemyWallsGateCurrent) {
+        enemyOneCurrentPosition -= width
+      }
+      addEnemyOne(enemyOneCurrentPosition)
+    }, 1000)
+  }
+
+
+  loadEnemies(enemyOneStartPosition)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //*END GAME LOGIC - COUNTS IF ANY DIVS CONTAIN ENERGIZER OR SURFACE CLASS
 
   function checkForWin() {
-    const leftEnergizer = [...gridItems].filter(item => item.classList.contains('energizer'))
+    const leftEnergizer = cells.filter(cell => cell.classList.contains('energizer'))
     if (!leftEnergizer.length) {
-      console.log('ok ok ok')
-      const leftSurface = [...gridItems].filter(item => item.classList.contains('surface'))
+      const leftSurface = cells.filter(cell => cell.classList.contains('surface'))
       if (!leftSurface.length) {
-        console.log('round won!')
-        wrapper.removeChild(grid)
+        infoElement.innerText = ''
+        gridWrapper.removeChild(grid)
         const winnerBanner = document.createElement('h2')
-        winnerBanner.innerText = 'YOU RAISED THE BAR! \n YOU SET THE BAR! \n YOU RAISE THE BAR! \n BOYCOTT pumpkin spiced latte'
-        wrapper.appendChild(winnerBanner)
+        winnerBanner.innerText = 'YOU RAISED THE BAR! \n \nGREAT JOB'
+        main.appendChild(winnerBanner)
       }
     }
   }
 
+
+  //*AUDIO SETTINGS
+  function playMusic() {
+    mainAudio.play()
+    audioButton.classList.toggle('active')
+    window.removeEventListener('keydown', playMusic)
+  }
+  function togglePlay() {
+    mainAudio.paused ? mainAudio.play() : mainAudio.pause()
+    audioButton.classList.toggle('active')
+  }
+
+
+
+
+
+
+
+
+  //*EVENT LISTNERS
+  document.addEventListener('keydown', characterMove)
+
+  document.addEventListener('keydown', coin)
+  document.addEventListener('keyup', coin)
+  document.addEventListener('keydown', energize)
+  document.addEventListener('keyup', energize)
+  document.addEventListener('keydown', bonusPoints)
+  document.addEventListener('keyup', bonusPoints)
+
+
+  window.addEventListener('load', enemyOneBoxOut)
   window.addEventListener('keydown', checkForWin)
 
+  audioButton.addEventListener('click', togglePlay)
+  window.addEventListener('keydown', playMusic)
 
 
 
-  //*CharacterPlayingSurface
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //*BACKGROUND FUNCTIONALITY
+  //*BOARD FLOOR - SURFACE CLASS
   function playingSurface(numStart, numEnd) {
     for (let i = numStart; i <= numEnd; i++) {
-      gridItems.item(i).classList.add('surface')
+      cells[i].classList.add('surface')
     }
   }
   playingSurface(29, 40)
@@ -233,9 +397,8 @@ function init() {
   playingSurface(743, 746)
   playingSurface(749, 754)
   playingSurface(813, 838)
-
   function surfaceSingle(num) {
-    gridItems.item(num).classList.add('surface')
+    cells[num].classList.add('surface')
   }
   surfaceSingle(57)
   surfaceSingle(62)
@@ -327,10 +490,10 @@ function init() {
   surfaceSingle(810)
 
 
-  //*EmptySpaceOnBoard
+  //*VOID BOARD SPACE - CLASS EMPTY-BACKGROUND
   function emptyGrid(numStart, numEnd) {
     for (let i = numStart; i <= numEnd; i++) {
-      gridItems.item(i).classList.add('empty-background')
+      cells[i].classList.add('empty-background')
     }
   }
   emptyGrid(87, 88)
@@ -351,10 +514,10 @@ function init() {
   emptyGrid(527, 531)
 
 
-  //*BordersOnBoard
+  //*PLAYING BORDERS - CLASS WALL
   function wallGridRow(numStart, numEnd) {
     for (let i = numStart; i <= numEnd; i++) {
-      gridItems.item(i).classList.add('wall')
+      cells[i].classList.add('wall')
     }
   }
   wallGridRow(0, 28)
@@ -466,10 +629,8 @@ function init() {
   wallGridRow(797, 798)
   wallGridRow(800, 809)
   wallGridRow(811, 812)
-
-
   function wallGridSingle(num) {
-    gridItems.item(num).classList.add('wall')
+    cells[num].classList.add('wall')
   }
   wallGridSingle(86)
   wallGridSingle(89)
@@ -495,10 +656,11 @@ function init() {
   wallGridSingle(839)
 
 
+  //*ENEMY HOME BORDER / GATE - CLASS WALL & ENEMY-WALL / ENEMY-GATE
   function enemyWallRow(numStart, numEnd) {
     for (let i = numStart; i <= numEnd; i++) {
-      gridItems.item(i).classList.add('wall')
-      gridItems.item(i).classList.add('enemy-wall')
+      cells[i].classList.add('wall')
+      cells[i].classList.add('enemy-wall')
     }
   }
   enemyWallRow(346, 348)
@@ -507,155 +669,23 @@ function init() {
   enemyWallRow(380, 381)
   enemyWallRow(402, 409)
   enemyWallRow(430, 437)
-
   function enemyGateRow(numStart, numEnd) {
     for (let i = numStart; i <= numEnd; i++) {
-      gridItems.item(i).classList.add('enemy-gate')
+      cells[i].classList.add('enemy-gate')
     }
   }
   enemyGateRow(349, 350)
 
 
-  //*Dots & Energizers
+  //*DOTS & ENERGIZER
   function energizerGrid(num) {
-    gridItems.item(num).classList.add('surface')
-    gridItems.item(num).classList.add('energizer')
+    cells[num].classList.add('surface')
+    cells[num].classList.add('energizer')
   }
 
   energizerGrid(645)
   energizerGrid(670)
   energizerGrid(85)
   energizerGrid(110)
-
-
-
-
-  //*AudioSettings
-
-  function playMusic() {
-    mainAudio.play()
-    audioButton.classList.toggle('active')
-    window.removeEventListener('keydown', playMusic)
-  }
-  function togglePlay() {
-    mainAudio.paused ? mainAudio.play() : mainAudio.pause()
-    audioButton.classList.toggle('active')
-  }
-
-  window.addEventListener('keydown', playMusic)
-  audioButton.addEventListener('click', togglePlay)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //*Enemy Logic
-
-
-
-
-  function loadEnemies(enemyOneStartPosition) {
-    addEnemyOne(enemyOneStartPosition)
-  }
-
-
-  const enemyOneStartPosition = 376
-  let enemyOneCurrentPosition = 376
-  let enemyOneClass = 'enemyOne'
-
-
-  function addEnemyOne(position) {
-    cells[position].classList.add(enemyOneClass)
-  }
-  function removeEnemyOne(position) {
-    cells[position].classList.remove(enemyOneClass)
-  }
-
-
-  //*Move Enemey
-  function enemyOneBoxOut() {
-
-    const inBox = setInterval(() => {
-      
-      const enemyWallsTopBottomRight = cells[enemyOneCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition + 1].classList.contains('enemy-wall')
-      const enemyWallsTopBottomLeft = cells[enemyOneCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition - 1].classList.contains('enemy-wall')
-      const enemyWallsBottom = cells[enemyOneCurrentPosition + width].classList.contains('enemy-wall')
-      const enemyWallsGateCurrent = cells[enemyOneCurrentPosition].classList.contains('enemy-gate')
-      const enemyWallsGateBottom = cells[enemyOneCurrentPosition + width].classList.contains('enemy-gate')
-      const wallsTopBottomRight = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition + 1].classList.contains('wall')
-      const wallsTopRight = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition + 1].classList.contains('wall')
-      const wallsTopBottomLeft = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
-      const wallsBottomRight = cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition + 1].classList.contains('wall')
-      const wallsTopLeft = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
-      const wallsBottomLeft = cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
-      const wallsTop = cells[enemyOneCurrentPosition - width].classList.contains('wall')
-      const wallsBottom = cells[enemyOneCurrentPosition + width].classList.contains('wall')
-      const wallsTopBottom = cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition + width].classList.contains('wall')
-      const wallsRight = cells[enemyOneCurrentPosition + 1].classList.contains('wall')
-      const wallsLeft = cells[enemyOneCurrentPosition -1].classList.contains('wall')
-      const wallsRightLeft = cells[enemyOneCurrentPosition + 1].classList.contains('wall') && cells[enemyOneCurrentPosition -1].classList.contains('wall')
-
-      if (enemyWallsGateBottom) {
-        clearInterval(inBox)
-        hunt()
-      }
-
-      removeEnemyOne(enemyOneCurrentPosition)
-      
-
-      if (enemyWallsTopBottomLeft) {
-        enemyOneCurrentPosition += 1
-      }
-      else if (enemyWallsTopBottomRight) {
-        enemyOneCurrentPosition -= 1
-      }
-      else if (enemyWallsBottom) {
-        enemyOneCurrentPosition -= width
-      }
-      else if(enemyWallsGateCurrent) {
-        enemyOneCurrentPosition -=width
-      }
-      addEnemyOne(enemyOneCurrentPosition)
-    }, 1000)
-  }
-
-function hunt() {
-  if (enemyOneCurrentPosition < characterCurrentPosition && !wallsRight) {
-    enemyOneCurrentPosition +1
-  }
-}
-
-
-
-
-
-
-  loadEnemies(enemyOneStartPosition)
-
-
-
-
-
-
-
-
-
-
 }
 window.addEventListener('DOMContentLoaded', init)
