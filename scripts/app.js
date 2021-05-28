@@ -1,5 +1,6 @@
 function init() {
 
+
   const topContainer = document.querySelector('.top-container')
   const wrapper = document.querySelector('.grid-wrapper')
   const grid = document.querySelector('.grid')
@@ -32,6 +33,8 @@ function init() {
     }
     addCharacter(characterStartPosition)
   }
+
+
 
   function addCharacter(position) {
     cells[position].classList.add(characterClass)
@@ -108,7 +111,7 @@ function init() {
     currentScore.innerText = score
   }
 
-
+  window.addEventListener('load', enemyOneBoxOut)
   document.addEventListener('keydown', coin)
   document.addEventListener('keydown', energize)
   document.addEventListener('keydown', characterMove)
@@ -140,7 +143,7 @@ function init() {
       piggyBankAppend.innerText = piggyBankFacts[choice]
       topContainer.removeChild()
       topContainer.appendChild(piggyBankAppend)
-    
+
     } else if (characterCurrentPosition === 461 && gridItems.item(461).classList.contains('isa')) {
       gridItems.item(461).classList.remove('isa')
       score += 40
@@ -150,7 +153,7 @@ function init() {
       isaAppend.innerText = isaFacts[choice]
       topContainer.removeChild()
       topContainer.appendChild(isaAppend)
-      
+
     } else if (characterCurrentPosition === 461 && gridItems.item(461).classList.contains('bonds')) {
       gridItems.item(461).classList.remove('bonds')
       score += 60
@@ -160,7 +163,7 @@ function init() {
       bondsAppend.innerText = bondsFacts[choice]
       topContainer.removeChild()
       topContainer.appendChild(bondsAppend)
-      
+
     } else if (characterCurrentPosition === 461 && gridItems.item(461).classList.contains('property')) {
       gridItems.item(461).classList.remove('property')
       score += 150
@@ -176,7 +179,7 @@ function init() {
 
 
   document.addEventListener('keydown', bonusPoints)
-  let randomTime = Math.floor(Math.random() * 10000)
+  let randomTime = Math.floor(Math.random() * 60000)
   setInterval(bonusItem, randomTime)
 
 
@@ -201,16 +204,6 @@ function init() {
   }
 
   window.addEventListener('keydown', checkForWin)
-
-
-
-//*Enemy Logic
-
-
-
-
-
-
 
 
 
@@ -517,7 +510,6 @@ function init() {
 
   function enemyGateRow(numStart, numEnd) {
     for (let i = numStart; i <= numEnd; i++) {
-      gridItems.item(i).classList.add('wall')
       gridItems.item(i).classList.add('enemy-gate')
     }
   }
@@ -565,6 +557,96 @@ function init() {
 
 
 
+
+
+
+
+
+
+
+
+  //*Enemy Logic
+
+
+
+
+  function loadEnemies(enemyOneStartPosition) {
+    addEnemyOne(enemyOneStartPosition)
+  }
+
+
+  const enemyOneStartPosition = 376
+  let enemyOneCurrentPosition = 376
+  let enemyOneClass = 'enemyOne'
+
+
+  function addEnemyOne(position) {
+    cells[position].classList.add(enemyOneClass)
+  }
+  function removeEnemyOne(position) {
+    cells[position].classList.remove(enemyOneClass)
+  }
+
+
+  //*Move Enemey
+  function enemyOneBoxOut() {
+
+    const inBox = setInterval(() => {
+      
+      const enemyWallsTopBottomRight = cells[enemyOneCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition + 1].classList.contains('enemy-wall')
+      const enemyWallsTopBottomLeft = cells[enemyOneCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition - 1].classList.contains('enemy-wall')
+      const enemyWallsBottom = cells[enemyOneCurrentPosition + width].classList.contains('enemy-wall')
+      const enemyWallsGateCurrent = cells[enemyOneCurrentPosition].classList.contains('enemy-gate')
+      const enemyWallsGateBottom = cells[enemyOneCurrentPosition + width].classList.contains('enemy-gate')
+      const wallsTopBottomRight = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition + 1].classList.contains('wall')
+      const wallsTopRight = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition + 1].classList.contains('wall')
+      const wallsTopBottomLeft = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
+      const wallsBottomRight = cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition + 1].classList.contains('wall')
+      const wallsTopLeft = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
+      const wallsBottomLeft = cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
+      const wallsTop = cells[enemyOneCurrentPosition - width].classList.contains('wall')
+      const wallsBottom = cells[enemyOneCurrentPosition + width].classList.contains('wall')
+      const wallsTopBottom = cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition + width].classList.contains('wall')
+      const wallsRight = cells[enemyOneCurrentPosition + 1].classList.contains('wall')
+      const wallsLeft = cells[enemyOneCurrentPosition -1].classList.contains('wall')
+      const wallsRightLeft = cells[enemyOneCurrentPosition + 1].classList.contains('wall') && cells[enemyOneCurrentPosition -1].classList.contains('wall')
+
+      if (enemyWallsGateBottom) {
+        clearInterval(inBox)
+        hunt()
+      }
+
+      removeEnemyOne(enemyOneCurrentPosition)
+      
+
+      if (enemyWallsTopBottomLeft) {
+        enemyOneCurrentPosition += 1
+      }
+      else if (enemyWallsTopBottomRight) {
+        enemyOneCurrentPosition -= 1
+      }
+      else if (enemyWallsBottom) {
+        enemyOneCurrentPosition -= width
+      }
+      else if(enemyWallsGateCurrent) {
+        enemyOneCurrentPosition -=width
+      }
+      addEnemyOne(enemyOneCurrentPosition)
+    }, 1000)
+  }
+
+function hunt() {
+  if (enemyOneCurrentPosition < characterCurrentPosition && !wallsRight) {
+    enemyOneCurrentPosition +1
+  }
+}
+
+
+
+
+
+
+  loadEnemies(enemyOneStartPosition)
 
 
 

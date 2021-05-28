@@ -71,8 +71,9 @@ h3 {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  
 }
+
+
 .surface {
   background-color: gold;
 }
@@ -96,7 +97,9 @@ h3 {
 .energizer {
   background-color:chartreuse;
 }
-
+.enemyOne {
+  background-color: white;
+}
 
 
 
