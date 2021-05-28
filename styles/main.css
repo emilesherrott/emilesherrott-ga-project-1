@@ -1,4 +1,123 @@
 body {
-  background-color: #ffbbbb
-  ;
+  background-color: #ffbbbb;
+  font-family: 'Press Start 2P', cursive;
+}
+h1 {
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.sound {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: gray;
+  height: 32px;
+  width: 32px;
+}
+.active {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: goldenrod;
+  height: 32px;
+  width: 32px;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: center;
+}
+#current-score {
+  padding-right: 1em;
+}
+.grid-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.grid {
+  width: 448px;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: center;
+  align-content: center;
+}
+h2 {
+  padding-top: 50px;
+  line-height: 3em;
+    text-align: center;
+}
+h3 {
+  position: absolute;
+  top: 100px;
+  right: 40px;
+  width: 200px;
+}
+.grid-piece {
+  width: 16px;
+  height: 16px;
+  font-size: 5px;
+  font-family:'Courier New', Courier, monospace
+}
+.empty {
+  background-color: aliceblue;
+}
+
+.character {
+  background-color: black;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  
+}
+.surface {
+  background-color: gold;
+}
+
+.empty-background {
+  background-color: aliceblue;
+}
+
+.wall {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.enemy-wall {
+  background-color: #aa1111;
+}
+
+.enemy-gate {
+  background-color: burlywood;
+}
+
+.energizer {
+  background-color:chartreuse;
+}
+
+
+
+
+
+
+
+
+/*  */ RandomItemSpawn
+
+.piggy-bank {
+  background-color: hotpink;
+}
+
+.isa {
+  background-color: indigo;
+}
+
+.bonds {
+  background-color: darkgreen;
+}
+
+.property {
+  background-color: navy;
 }
