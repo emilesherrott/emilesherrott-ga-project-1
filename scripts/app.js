@@ -25,7 +25,7 @@ function init() {
   let score = 0
   currentScore.innerText = score
 
-  function createGrid(characterStartPosition) {
+  function createGrid(characterStartPosition, enemyOneStartPosition, enemyTwoStartPosition, enemyThreeStartPosition, enemyFourStartPosition) {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
       cell.innerText = i
@@ -34,16 +34,37 @@ function init() {
       cells.push(cell)
     }
     addCharacter(characterStartPosition)
+    addEnemyOne(enemyOneStartPosition)
+    addEnemyTwo(enemyTwoStartPosition)
+    addEnemyThree(enemyThreeStartPosition)
+    addEnemyFour(enemyFourStartPosition)
   }
 
-  //*MAIN CHARACTER LOGIC - INITIALISING
+  //*MAIN CHARACTER & ENEMY LOGIC - INITIALISING
   const characterStartPosition = 657
   let characterCurrentPosition = 657
   let characterClass = 'character'
 
+  const enemyOneStartPosition = 376
+  let enemyOneCurrentPosition = 376
+  let enemyOneClass = 'enemyOne'
+
+  const enemyTwoStartPosition = 377
+  let enemyTwoCurrentPosition = 377
+  let enemyTwoClass = 'enemyTwo'
+
+  const enemyThreeStartPosition = 378
+  let enemyThreeCurrentPosition = 378
+  let enemyThreeClass = 'enemyThree'
+  
+  const enemyFourStartPosition = 379
+  let enemyFourCurrentPosition = 379
+  let enemyFourClass = 'enemyFour'
+
+
 
   //*CREATE GRID NEEDS TO BE CALLED FOLLOWING CHARACTER INITIALISING (VARIABLES CAN'T BE HOISTED)
-  createGrid(characterStartPosition)
+  createGrid(characterStartPosition, enemyOneStartPosition, enemyTwoStartPosition, enemyThreeStartPosition, enemyFourStartPosition)
 
 
 
@@ -68,6 +89,11 @@ function init() {
       characterCurrentPosition -= width
     } else if (key === 40 && characterCurrentPosition + width <= width * height - 1 && !cells[characterCurrentPosition + width].classList.contains('wall')) {
       characterCurrentPosition += width
+    } else if (key === 39 && characterCurrentPosition === 419) {
+      characterCurrentPosition = 392
+    }
+    else if (key === 37 && characterCurrentPosition === 392) {
+      characterCurrentPosition = 419
     }
     addCharacter(characterCurrentPosition)
   }
@@ -103,7 +129,7 @@ function init() {
       cells[461].classList.add(randomChoice)
     }
   }
-  setInterval(bonusItem, 6000)
+  setInterval(bonusItem, 20000)
 
 
   function removeBonus(bonusName) {
@@ -142,30 +168,7 @@ function init() {
 
 
 
-
-
-
-
-
-
-
-
-
-  //*Enemy Logic
-
-
-
-
-  function loadEnemies(enemyOneStartPosition) {
-    addEnemyOne(enemyOneStartPosition)
-  }
-
-
-  const enemyOneStartPosition = 376
-  let enemyOneCurrentPosition = 376
-  let enemyOneClass = 'enemyOne'
-
-
+  //*ENEMY ONE INITIALISE
   function addEnemyOne(position) {
     cells[position].classList.add(enemyOneClass)
   }
@@ -173,47 +176,77 @@ function init() {
     cells[position].classList.remove(enemyOneClass)
   }
 
+  //*ENEMY TWO INITIALISE
+  function addEnemyTwo(position) {
+    cells[position].classList.add(enemyTwoClass)
+  }
+  function removeEnemyTwo(position) {
+    cells[position].classList.remove(enemyTwoClass)
+  }
 
-  //*Move Enemey
+  //*ENEMY THREE INITIALISE
+  function addEnemyThree(position) {
+    cells[position].classList.add(enemyThreeClass)
+  }
+  function removeEnemyThree(position) {
+    cells[position].classList.remove(enemyThreeClass)
+  }
+
+  //*ENEMY FOUR INITIALISE
+  function addEnemyFour(position) {
+    cells[position].classList.add(enemyFourClass)
+  }
+  function removeEnemyFour(position) {
+    cells[position].classList.remove(enemyFourClass)
+  }
+
+
+  //* LOGIC TO GET OUT OF INNER BOX
+  const enemyWallsTopBottomRight = enemyCurrentPosition => cells[enemyCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyCurrentPosition + 1].classList.contains('enemy-wall')
+  const enemyWallsTopBottomLeft = enemyCurrentPosition => cells[enemyCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyCurrentPosition - 1].classList.contains('enemy-wall')
+  const enemyWallsBottom = enemyCurrentPosition => cells[enemyCurrentPosition + width].classList.contains('enemy-wall')
+  const enemyWallsGateCurrent = enemyCurrentPosition => cells[enemyCurrentPosition].classList.contains('enemy-gate')
+  const enemyWallsGateBottom = enemyCurrentPosition => cells[enemyCurrentPosition + width].classList.contains('enemy-gate')
+
+  //*LOGIC TO LOCATE MAIN CHARACTER
+  const greaterThan = enemyCurrentPosition => characterCurrentPosition > enemyCurrentPosition
+  const greaterThanRow = enemyCurrentPosition => (characterCurrentPosition % width) > (enemyCurrentPosition % width)
+  const vacantTop = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall')
+  const vacantTopRight = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
+  const vacantRight = enemyCurrentPosition => !(cells[enemyCurrentPosition + 1].classList.contains('wall'))
+  const vacantTopBottomRight = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
+  const vacantBottomRight = enemyCurrentPosition => !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
+  const vacantBottom = enemyCurrentPosition => !cells[enemyCurrentPosition + width].classList.contains('wall')
+  const vacantBottomLeftRight = enemyCurrentPosition => !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
+  const vacantBottomLeft = enemyCurrentPosition => !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall')
+  const vacantTopBottomLeft = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall')
+  const vacantLeft = enemyCurrentPosition => !cells[enemyCurrentPosition - 1].classList.contains('wall')
+  const vacantTopLeft = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall')
+  const vacantTopLeftRight = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
+  const vacantLeftRight = enemyCurrentPosition => !cells[enemyCurrentPosition - 1].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
+  const vacantTopBottom = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + width].classList.contains('wall')
+  const vacantAll = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall')
+
+
+  //*MOVE ENEMY OUT OF BOX
   function enemyOneBoxOut() {
-
-    const inBox = setInterval(() => {
-
-      const enemyWallsTopBottomRight = cells[enemyOneCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition + 1].classList.contains('enemy-wall')
-      const enemyWallsTopBottomLeft = cells[enemyOneCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyOneCurrentPosition - 1].classList.contains('enemy-wall')
-      const enemyWallsBottom = cells[enemyOneCurrentPosition + width].classList.contains('enemy-wall')
-      const enemyWallsGateCurrent = cells[enemyOneCurrentPosition].classList.contains('enemy-gate')
-      const enemyWallsGateBottom = cells[enemyOneCurrentPosition + width].classList.contains('enemy-gate')
-      const wallsTopBottomRight = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition + 1].classList.contains('wall')
-      const wallsTopRight = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition + 1].classList.contains('wall')
-      const wallsTopBottomLeft = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
-      const wallsBottomRight = cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition + 1].classList.contains('wall')
-      const wallsTopLeft = cells[enemyOneCurrentPosition - width].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
-      const wallsBottomLeft = cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
-      const wallsTop = cells[enemyOneCurrentPosition - width].classList.contains('wall')
-      const wallsBottom = cells[enemyOneCurrentPosition + width].classList.contains('wall')
-      const wallsTopBottom = cells[enemyOneCurrentPosition + width].classList.contains('wall') && cells[enemyOneCurrentPosition + width].classList.contains('wall')
-      const wallsRight = cells[enemyOneCurrentPosition + 1].classList.contains('wall')
-      const wallsLeft = cells[enemyOneCurrentPosition - 1].classList.contains('wall')
-      const wallsRightLeft = cells[enemyOneCurrentPosition + 1].classList.contains('wall') && cells[enemyOneCurrentPosition - 1].classList.contains('wall')
-
-      if (enemyWallsGateBottom) {
-        clearInterval(inBox)
+    const whilstInBox = setInterval(() => {
+      if (enemyWallsGateBottom(enemyOneCurrentPosition)) {
+        clearInterval(whilstInBox)
+        locateCharacter()
       }
-
       removeEnemyOne(enemyOneCurrentPosition)
-
-
-      if (enemyWallsTopBottomLeft) {
+      if (enemyWallsTopBottomLeft(enemyOneCurrentPosition)) {
         enemyOneCurrentPosition += 1
       }
-      else if (enemyWallsTopBottomRight) {
+      else if (enemyWallsTopBottomRight(enemyOneCurrentPosition)) {
         enemyOneCurrentPosition -= 1
       }
-      else if (enemyWallsBottom) {
+      else if (enemyWallsBottom(enemyOneCurrentPosition)) {
+
         enemyOneCurrentPosition -= width
       }
-      else if (enemyWallsGateCurrent) {
+      else if (enemyWallsGateCurrent(enemyOneCurrentPosition)) {
         enemyOneCurrentPosition -= width
       }
       addEnemyOne(enemyOneCurrentPosition)
@@ -221,12 +254,71 @@ function init() {
   }
 
 
-  loadEnemies(enemyOneStartPosition)
 
+  //*LOCATE MAIN CHARACTER
+  function locateCharacter() {
+    const whilstOutsideBox = setInterval(() => {
+      removeEnemyOne(enemyOneCurrentPosition)
+      const route = Math.floor(Math.random() * 4)
 
-
-
-
+      if (greaterThan(enemyOneCurrentPosition) && greaterThanRow(enemyOneCurrentPosition)) {
+        console.log('route1')
+        if (vacantBottomRight(enemyOneCurrentPosition)) {
+          if (route < 2) {
+            enemyOneCurrentPosition += width
+          } else {
+            enemyOneCurrentPosition++
+          }
+        } else if (vacantBottom(enemyOneCurrentPosition)) {
+          enemyOneCurrentPosition += width
+        } else if (vacantRight(enemyOneCurrentPosition)) {
+          enemyOneCurrentPosition++
+        } 
+      } else if (greaterThan(enemyOneCurrentPosition) && !greaterThanRow(enemyOneCurrentPosition)) {
+        console.log('route2')
+        if (vacantBottomLeft(enemyOneCurrentPosition)) {
+          if (route < 2) {
+            enemyOneCurrentPosition += width
+          } else {
+            enemyOneCurrentPosition--
+          }
+        } else if (vacantBottom(enemyOneCurrentPosition)) {
+          enemyOneCurrentPosition += width
+        } else if (vacantLeft(enemyOneCurrentPosition)) {
+          enemyOneCurrentPosition--
+        } else if (vacantRight(enemyOneCurrentPosition)) {
+          enemyOneCurrentPosition == width
+        }
+      } else if (!greaterThan(enemyOneCurrentPosition) && greaterThanRow(enemyOneCurrentPosition)) {
+        console.log('route3')
+        if (vacantTopRight(enemyOneCurrentPosition)) {
+          if (route < 2) {
+            enemyOneCurrentPosition -= width
+          } else {
+            enemyOneCurrentPosition++
+          }
+        } else if (vacantTop(enemyOneCurrentPosition)) {
+          enemyOneCurrentPosition -= width
+        } else if (vacantRight(enemyOneCurrentPosition)) {
+          enemyOneCurrentPosition++
+        }
+      } else if (!greaterThan(enemyOneCurrentPosition) && !greaterThanRow(enemyOneCurrentPosition)) {
+        console.log('route4')
+        if (vacantTopLeft(enemyOneCurrentPosition)) {
+          if (route < 2) {
+            enemyOneCurrentPosition -= width
+          } else {
+            enemyOneCurrentPosition--
+          }
+        } else if (vacantTop(enemyOneCurrentPosition)) {
+          enemyOneCurrentPosition -= width
+        } else if (vacantLeft(enemyOneCurrentPosition)) {
+          enemyOneCurrentPosition--
+        }
+      }
+      addEnemyOne(enemyOneCurrentPosition)
+    }, 400)
+  }
 
 
 
@@ -671,6 +763,7 @@ function init() {
   enemyWallRow(430, 437)
   function enemyGateRow(numStart, numEnd) {
     for (let i = numStart; i <= numEnd; i++) {
+      cells[i].classList.add('wall')
       cells[i].classList.add('enemy-gate')
     }
   }

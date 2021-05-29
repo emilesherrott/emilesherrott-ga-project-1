@@ -63,15 +63,6 @@ h1 {
 }
 
 
-/* GAME CHARACTERS */
-.character {
-  background-color: black;
-}
-.enemyOne {
-  background-color: white;
-}
-
-
 /* SCORE ITEMS */
 .surface {
   background-color: gold;
@@ -96,7 +87,22 @@ h1 {
 }
 
 
-
+/* GAME CHARACTERS */
+.character {
+  background-color: black;
+}
+.enemyFour {
+  background-color: greenyellow;
+}
+.enemyThree {
+  background-color: red;
+}
+.enemyTwo {
+  background-color: blue;
+}
+.enemyOne {
+  background-color: white;
+}
 
 
 
