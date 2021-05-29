@@ -35,7 +35,9 @@ h1 {
   font-size: 5px;
   font-family:'Courier New', Courier, monospace
 }
-
+.col1, .col2 {
+  padding-top: 50px;
+}
 
 /* SUB ELEMENTS */
 #current-score {
@@ -55,6 +57,9 @@ p {
 .heart {
   width: 20px;
   height: 20px;
+}
+li {
+  list-style-type: none;
 }
 
 

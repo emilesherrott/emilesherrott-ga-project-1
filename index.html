@@ -22,13 +22,34 @@
     </div>
     <div class="grid-wrapper">
       <div class="grid"></div>
-      <div id="info-element"></div>
+      <div class="col1">
+        <div class="game-over">
+          <h2>Game Over</h2>
+          <p>Score <span id="game-over-score"></span></p>
+          <form id="end-score-form">
+            <label for="name">Username</label>
+            <input type="text" id="score-name">
+            <input type="submit" id="submit">
+          </form>
+        </div>
+        <div>
+        <div id="display-results"></div>
+        </div>
+      </div>
+      <div class="col2">
+      <div id="info-element">
+        <h2>Leaderboard</h2>
+        <ol id="ol-board">
+
+        </ol>
+      </div>
+      </div>
     </div>
     <div class="lives">
       Lives
-      <img src="gifs/heart4.png" alt="heart" class="heart" /> 
-      <img src="gifs/heart4.png" alt="heart" class="heart" /> 
-      <img src="gifs/heart4.png" alt="heart" class="heart" /> 
+      <img id="heart1" src="gifs/heart.png" alt="heart" class="heart" />
+      <img id="heart2" src="gifs/heart.png" alt="heart" class="heart" />
+      <img id="heart3" src="gifs/heart.png" alt="heart" class="heart" />
     </div>
   </main>
 </body>

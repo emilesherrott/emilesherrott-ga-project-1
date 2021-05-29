@@ -4,9 +4,55 @@ function init() {
   const main = document.querySelector('main')
   const gridWrapper = document.querySelector('.grid-wrapper')
   const grid = document.querySelector('.grid')
+  const topContainer = document.querySelector('.top-container')
   const currentScore = document.querySelector('#current-score')
-  const highScore = document.querySelector('high-score')
+  const highScore = document.querySelector('#high-score')
+
+  //*IN GAME LIFE ELEMENTS
   const infoElement = document.querySelector('#info-element')
+  const lives = document.querySelector('.lives')
+  const heart1 = document.querySelector('#heart1')
+  const heart2 = document.querySelector('#heart2')
+  const heart3 = document.querySelector('#heart3')
+
+  //*GAME OVER ELEMENTS
+  const gameOver = document.querySelector('.game-over')
+  gameOver.style.display = 'none'
+  const gameOverScore = document.querySelector('#game-over-score')
+  const gameOverForm = document.querySelector('#end-score-form')
+  const gameOverName = document.querySelector('#score-name')
+  const leaderboard = document.querySelector('#info-element')
+  const submit = document.querySelector('#submit')
+  leaderboard.style.display = 'none'
+  const ol = document.querySelector('#ol-board')
+
+
+
+  const scoreboard = []
+  localStorage.setItem('scoreboardArray',scoreboard)
+  const scoreboardArray = localStorage.getItem('scoreboardArray')
+  
+  function storeName(event, scoreboard, scoreboardArray) {
+    event.preventDefault()
+    if (scoreboard.length === 0) {
+      scoreboard[0]=event.toElement.form[0].value
+      scoreboard[1]=score
+    } else if (scoreboard.length === 1) {
+      if (score > scoreboard[0][1]) {
+        scoreboard.unshift([event.toElement.form[0].value],[score])
+      }
+    }
+    const newScoreboard = scoreboardArray.split(',')
+   
+    console.log(scoreboard)
+    console.log(scoreboardArray)
+    console.log(newScoreboard)
+    const li = document.createElement('li')
+    li.innerText = `${scoreboardArray[0]} ${scoreboardArray[1]}`
+    ol.appendChild(li)
+  }
+
+
 
 
   //*AUDIO FUNCTIONALITY
@@ -14,7 +60,23 @@ function init() {
   const mainAudio = new Audio('music/background.mp3')
   const collectEnergizer = new Audio('music/energize.wav')
   const collectBonus = new Audio('music/bonus.wav')
-  const enemyHit = new Audio ('music/enemy-hit.wav')
+  const enemyHit = new Audio('music/enemy-hit.wav')
+  const gameOverAudio = new Audio('music/game-over.wav')
+
+
+  //*SCORING DISPLAY
+  let score = 0
+  currentScore.innerText = score
+
+  let high = localStorage.getItem('highest-score')
+  function displayHighScore(score, high) {
+    if (score > high) {
+      return highScore.innerText = score
+    } else {
+      return highScore.innerText = high
+    }
+  }
+
 
 
   //*GRID CREATION
@@ -23,8 +85,6 @@ function init() {
   const cellCount = width * height
   const cells = []
 
-  let score = 0
-  currentScore.innerText = score
 
   function createGrid(characterStartPosition, enemyOneStartPosition, enemyTwoStartPosition, enemyThreeStartPosition, enemyFourStartPosition) {
     for (let i = 0; i < cellCount; i++) {
@@ -111,6 +171,8 @@ function init() {
       score += 90
     }
     currentScore.innerText = score
+    displayHighScore(score, high)
+
   }
   //*COINS
   function coin() {
@@ -119,6 +181,7 @@ function init() {
       score += 10
     }
     currentScore.innerText = score
+    displayHighScore(score, high)
   }
 
 
@@ -131,7 +194,7 @@ function init() {
       cells[461].classList.add(randomChoice)
     }
   }
-  setInterval(bonusItem, 20000)
+  setInterval(bonusItem, 1000)
 
 
   function removeBonus(bonusName) {
@@ -340,6 +403,9 @@ function init() {
   function oneLocateCharacter() {
     const whilstOneOutsideBox = setInterval(() => {
       removeEnemyOne(enemyOneCurrentPosition)
+      if (cells[characterCurrentPosition].classList.contains(enemyOneClass)) {
+        removeEnemyOne(enemyOneCurrentPosition)
+      }
       const route = Math.floor(Math.random() * 4)
       if (greaterThan(enemyOneCurrentPosition) && greaterThanRow(enemyOneCurrentPosition)) {
         if (vacantBottomRight(enemyOneCurrentPosition)) {
@@ -665,32 +731,51 @@ function init() {
 
 
 
-
-
-
-
-
-
-
   //*END GAME LOGIC - CHECK FOR DEATH
   function inCaseOfDeath() {
-    const inContactWithEnemy = setInterval(() => {
-      if (cells[characterCurrentPosition].classList.contains(enemyOneClass)) {
-        enemyHit.play()
-        removeCharacter(characterCurrentPosition)
-        removeEnemyOne(enemyOneCurrentPosition)
-        removeEnemyTwo(enemyTwoCurrentPosition)
-        removeEnemyThree(enemyThreeCurrentPosition)
-        removeEnemyFour(enemyFourCurrentPosition)
+    if (cells[characterCurrentPosition].classList.contains(enemyOneClass)) {
+      enemyHit.play()
+      removeCharacter(characterCurrentPosition)
+      removeEnemyOne(enemyOneCurrentPosition)
+      removeEnemyTwo(enemyTwoCurrentPosition)
+      removeEnemyThree(enemyThreeCurrentPosition)
+      removeEnemyFour(enemyFourCurrentPosition)
+      addCharacter(characterStartPosition)
+      addEnemyOne(enemyOneStartPosition)
+      addEnemyTwo(enemyTwoStartPosition)
+      addEnemyThree(enemyThreeStartPosition)
+      addEnemyFour(enemyFourStartPosition)
 
-        addCharacter(characterStartPosition)
-        addEnemyOne(enemyOneStartPosition)
-        addEnemyTwo(enemyTwoStartPosition)
-        addEnemyThree(enemyThreeStartPosition)
-        addEnemyFour(enemyFourStartPosition)
-        // createGrid(characterStartPosition, enemyOneStartPosition, enemyTwoStartPosition, enemyThreeStartPosition, enemyFourStartPosition)
+
+      characterLives--
+      if (characterLives === 3) {
+        lives.removeChild(heart1)
+      } else if (characterLives === 2) {
+        lives.removeChild(heart2)
+      } else if (characterLives < 1) {
+        lives.removeChild(heart3)
       }
-    }, 1000)
+      if (characterLives < 1) {
+        gameOverAudio.play()
+        grid.style.display = 'none'
+        infoElement.style.display = 'none'
+        lives.style.display = 'none'
+        topContainer.style.display = 'none'
+        score > high ? high = score : high = high
+        gameOverScore.innerText = score
+        gameOver.style.display === 'none' ? gameOver.style.display = 'block' : gameOver.style.display = 'none'
+        leaderboard.style.display === 'none' ? leaderboard.style.display = 'block' : leaderboard.style.display = 'none'
+        localStorage.setItem('highest-score', high)
+        console.log('2')
+        // function storeName(event) {
+        //   event.preventDefault()
+        //   console.log('1')
+        //   const li = document.createElement(li)
+        //   li.innerText = localStorage.getItem('highest-score-name', event.toElement.form[0].value)
+        //   ol.appendChild(li)
+        // }
+      }
+    }
   }
 
 
@@ -741,6 +826,8 @@ function init() {
   document.addEventListener('keyup', energize)
   document.addEventListener('keydown', bonusPoints)
   document.addEventListener('keyup', bonusPoints)
+
+  submit.addEventListener('click', storeName)
 
 
   window.addEventListener('load', enemyOneBoxOut)
