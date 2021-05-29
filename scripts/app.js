@@ -14,6 +14,7 @@ function init() {
   const mainAudio = new Audio('music/background.mp3')
   const collectEnergizer = new Audio('music/energize.wav')
   const collectBonus = new Audio('music/bonus.wav')
+  const enemyHit = new Audio ('music/enemy-hit.wav')
 
 
   //*GRID CREATION
@@ -44,6 +45,7 @@ function init() {
   const characterStartPosition = 657
   let characterCurrentPosition = 657
   let characterClass = 'character'
+  let characterLives = 3
 
   const enemyOneStartPosition = 376
   let enemyOneCurrentPosition = 376
@@ -56,7 +58,7 @@ function init() {
   const enemyThreeStartPosition = 378
   let enemyThreeCurrentPosition = 378
   let enemyThreeClass = 'enemyThree'
-  
+
   const enemyFourStartPosition = 379
   let enemyFourCurrentPosition = 379
   let enemyFourClass = 'enemyFour'
@@ -207,10 +209,13 @@ function init() {
   const enemyWallsBottom = enemyCurrentPosition => cells[enemyCurrentPosition + width].classList.contains('enemy-wall')
   const enemyWallsGateCurrent = enemyCurrentPosition => cells[enemyCurrentPosition].classList.contains('enemy-gate')
   const enemyWallsGateBottom = enemyCurrentPosition => cells[enemyCurrentPosition + width].classList.contains('enemy-gate')
+  const enemyWallsLeft = enemyCurrentPosition => cells[enemyCurrentPosition--].classList.contains('enemy-gate')
+  const enemyWallsRight = enemyCurrentPosition => cells[enemyCurrentPosition++].classList.contains('enemy-gate')
 
   //*LOGIC TO LOCATE MAIN CHARACTER
   const greaterThan = enemyCurrentPosition => characterCurrentPosition > enemyCurrentPosition
   const greaterThanRow = enemyCurrentPosition => (characterCurrentPosition % width) > (enemyCurrentPosition % width)
+  const rowEqual = enemyCurrentPosition => (characterCurrentPosition % width) === (enemyCurrentPosition % width)
   const vacantTop = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall')
   const vacantTopRight = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
   const vacantRight = enemyCurrentPosition => !(cells[enemyCurrentPosition + 1].classList.contains('wall'))
@@ -229,11 +234,12 @@ function init() {
 
 
   //*MOVE ENEMY OUT OF BOX
+  //*ENEMY ONE
   function enemyOneBoxOut() {
-    const whilstInBox = setInterval(() => {
+    const whilstOneInBox = setInterval(() => {
       if (enemyWallsGateBottom(enemyOneCurrentPosition)) {
-        clearInterval(whilstInBox)
-        locateCharacter()
+        oneLocateCharacter()
+        clearInterval(whilstOneInBox)
       }
       removeEnemyOne(enemyOneCurrentPosition)
       if (enemyWallsTopBottomLeft(enemyOneCurrentPosition)) {
@@ -253,16 +259,89 @@ function init() {
     }, 1000)
   }
 
+  //*ENEMY TWO
+  function enemyTwoBoxOut() {
+    const whilstTwoInBox = setInterval(() => {
+      if (enemyTwoCurrentPosition === 317) {
+        twoLocateCharacter()
+        clearInterval(whilstTwoInBox)
+      }
+      removeEnemyTwo(enemyTwoCurrentPosition)
+      if (enemyTwoCurrentPosition === 377) {
+        enemyTwoCurrentPosition -= width
+      }
+      else if (enemyWallsLeft(enemyTwoCurrentPosition)) {
+        enemyTwoCurrentPosition -= width
+      }
+      else if (vacantLeft(enemyTwoCurrentPosition)) {
+        enemyTwoCurrentPosition--
+      }
+      addEnemyTwo(enemyTwoCurrentPosition)
+    }, 1000)
+  }
+
+
+  //*ENEMY THREE
+  function enemyThreeBoxOut() {
+    const whilstThreeInBox = setInterval(() => {
+      if (enemyThreeCurrentPosition === 326) {
+        threeLocateCharacter()
+        clearInterval(whilstThreeInBox)
+      }
+      removeEnemyThree(enemyThreeCurrentPosition)
+      if (enemyThreeCurrentPosition === 378) {
+        enemyThreeCurrentPosition -= width
+      }
+      else if (enemyWallsRight(enemyThreeCurrentPosition)) {
+        enemyThreeCurrentPosition -= width
+      }
+      else if (vacantRight(enemyThreeCurrentPosition)) {
+        enemyThreeCurrentPosition++
+      }
+      addEnemyThree(enemyThreeCurrentPosition)
+    }, 1000)
+  }
+
+
+  //*ENEMY FOUR
+  function enemyFourBoxOut() {
+    const whilstFourInBox = setInterval(() => {
+      if (enemyFourCurrentPosition === 295) {
+        fourLocateCharacter()
+        clearInterval(whilstFourInBox)
+      }
+      removeEnemyFour(enemyFourCurrentPosition)
+      if (enemyFourCurrentPosition === 379) {
+        enemyFourCurrentPosition--
+      } else if (enemyFourCurrentPosition === 378) {
+        enemyFourCurrentPosition--
+      } else if (enemyFourCurrentPosition === 377) {
+        enemyFourCurrentPosition -= width
+      } else if (enemyFourCurrentPosition === 349) {
+        enemyFourCurrentPosition++
+      } else if (enemyFourCurrentPosition === 350) {
+        enemyFourCurrentPosition -= width
+      } else if (enemyFourCurrentPosition === 349) {
+        enemyFourCurrentPosition++
+      } else if (enemyFourCurrentPosition === 350) {
+        enemyFourCurrentPosition -= width
+      } else if (enemyFourCurrentPosition === 322) {
+        enemyFourCurrentPosition++
+      } else if (enemyFourCurrentPosition === 323) {
+        enemyFourCurrentPosition -= width
+      }
+      addEnemyFour(enemyFourCurrentPosition)
+    }, 1000)
+  }
 
 
   //*LOCATE MAIN CHARACTER
-  function locateCharacter() {
-    const whilstOutsideBox = setInterval(() => {
+  //* ENEMY ONE
+  function oneLocateCharacter() {
+    const whilstOneOutsideBox = setInterval(() => {
       removeEnemyOne(enemyOneCurrentPosition)
       const route = Math.floor(Math.random() * 4)
-
       if (greaterThan(enemyOneCurrentPosition) && greaterThanRow(enemyOneCurrentPosition)) {
-        console.log('route1')
         if (vacantBottomRight(enemyOneCurrentPosition)) {
           if (route < 2) {
             enemyOneCurrentPosition += width
@@ -273,9 +352,8 @@ function init() {
           enemyOneCurrentPosition += width
         } else if (vacantRight(enemyOneCurrentPosition)) {
           enemyOneCurrentPosition++
-        } 
+        }
       } else if (greaterThan(enemyOneCurrentPosition) && !greaterThanRow(enemyOneCurrentPosition)) {
-        console.log('route2')
         if (vacantBottomLeft(enemyOneCurrentPosition)) {
           if (route < 2) {
             enemyOneCurrentPosition += width
@@ -290,7 +368,6 @@ function init() {
           enemyOneCurrentPosition == width
         }
       } else if (!greaterThan(enemyOneCurrentPosition) && greaterThanRow(enemyOneCurrentPosition)) {
-        console.log('route3')
         if (vacantTopRight(enemyOneCurrentPosition)) {
           if (route < 2) {
             enemyOneCurrentPosition -= width
@@ -303,7 +380,6 @@ function init() {
           enemyOneCurrentPosition++
         }
       } else if (!greaterThan(enemyOneCurrentPosition) && !greaterThanRow(enemyOneCurrentPosition)) {
-        console.log('route4')
         if (vacantTopLeft(enemyOneCurrentPosition)) {
           if (route < 2) {
             enemyOneCurrentPosition -= width
@@ -315,9 +391,273 @@ function init() {
         } else if (vacantLeft(enemyOneCurrentPosition)) {
           enemyOneCurrentPosition--
         }
+      } else if (greaterThan(enemyOneCurrentPosition) && rowEqual(enemyOneCurrentPosition)) {
+        if (vacantBottom(enemyOneCurrentPosition)) {
+          enemyOneCurrentPosition += width
+        } else if (vacantLeftRight) {
+          if (route < 2) {
+            enemyOneCurrentPosition--
+          } else {
+            enemyOneCurrentPosition++
+          }
+        }
+      } else if (!greaterThan(enemyOneCurrentPosition) && rowEqual(enemyOneCurrentPosition)) {
+        if (vacantBottomTop(enemyOneCurrentPosition)) {
+          enemyOneCurrentPosition += width
+        } else if (vacantLeftRight) {
+          if (route < 2) {
+            enemyOneCurrentPosition--
+          } else {
+            enemyOneCurrentPosition++
+          }
+        }
       }
       addEnemyOne(enemyOneCurrentPosition)
-    }, 400)
+    }, 1000)
+  }
+
+
+  //* ENEMY TWO
+  function twoLocateCharacter() {
+    const whilstTwoOutsideBox = setInterval(() => {
+      removeEnemyTwo(enemyTwoCurrentPosition)
+      const route = Math.floor(Math.random() * 4)
+      if (greaterThan(enemyTwoCurrentPosition) && greaterThanRow(enemyTwoCurrentPosition)) {
+        if (vacantBottomRight(enemyTwoCurrentPosition)) {
+          if (route < 2) {
+            enemyTwoCurrentPosition += width
+          } else {
+            enemyTwoCurrentPosition++
+          }
+        } else if (vacantBottom(enemyTwoCurrentPosition)) {
+          enemyTwoCurrentPosition += width
+        } else if (vacantRight(enemyTwoCurrentPosition)) {
+          enemyTwoCurrentPosition++
+        }
+      } else if (greaterThan(enemyTwoCurrentPosition) && !greaterThanRow(enemyTwoCurrentPosition)) {
+        if (vacantBottomLeft(enemyTwoCurrentPosition)) {
+          if (route < 2) {
+            enemyTwoCurrentPosition += width
+          } else {
+            enemyTwoCurrentPosition--
+          }
+        } else if (vacantBottom(enemyTwoCurrentPosition)) {
+          enemyTwoCurrentPosition += width
+        } else if (vacantLeft(enemyTwoCurrentPosition)) {
+          enemyTwoCurrentPosition--
+        } else if (vacantRight(enemyTwoCurrentPosition)) {
+          enemyTwoCurrentPosition == width
+        }
+      } else if (!greaterThan(enemyTwoCurrentPosition) && greaterThanRow(enemyTwoCurrentPosition)) {
+        if (vacantTopRight(enemyTwoCurrentPosition)) {
+          if (route < 2) {
+            enemyTwoCurrentPosition -= width
+          } else {
+            enemyTwoCurrentPosition++
+          }
+        } else if (vacantTop(enemyTwoCurrentPosition)) {
+          enemyTwoCurrentPosition -= width
+        } else if (vacantRight(enemyTwoCurrentPosition)) {
+          enemyTwoCurrentPosition++
+        }
+      } else if (!greaterThan(enemyTwoCurrentPosition) && !greaterThanRow(enemyTwoCurrentPosition)) {
+        if (vacantTopLeft(enemyTwoCurrentPosition)) {
+          if (route < 2) {
+            enemyTwoCurrentPosition -= width
+          } else {
+            enemyTwoCurrentPosition--
+          }
+        } else if (vacantTop(enemyTwoCurrentPosition)) {
+          enemyTwoCurrentPosition -= width
+        } else if (vacantLeft(enemyTwoCurrentPosition)) {
+          enemyTwoCurrentPosition--
+        }
+      } else if (greaterThan(enemyTwoCurrentPosition) && rowEqual(enemyTwoCurrentPosition)) {
+        if (vacantBottom(enemyTwoCurrentPosition)) {
+          enemyTwoCurrentPosition += width
+        } else if (vacantLeftRight) {
+          if (route < 2) {
+            enemyTwoCurrentPosition--
+          } else {
+            enemyTwoCurrentPosition++
+          }
+        }
+      } else if (!greaterThan(enemyTwoCurrentPosition) && rowEqual(enemyTwoCurrentPosition)) {
+        if (vacantBottomTop(enemyTwoCurrentPosition)) {
+          enemyTwoCurrentPosition += width
+        } else if (vacantLeftRight) {
+          if (route < 2) {
+            enemyTwoCurrentPosition--
+          } else {
+            enemyTwoCurrentPosition++
+          }
+        }
+      }
+      addEnemyTwo(enemyTwoCurrentPosition)
+    }, 1000)
+  }
+
+
+
+  //* ENEMY THREE
+  function threeLocateCharacter() {
+    const whilstThreeOutsideBox = setInterval(() => {
+      removeEnemyThree(enemyThreeCurrentPosition)
+      const route = Math.floor(Math.random() * 4)
+      if (greaterThan(enemyThreeCurrentPosition) && greaterThanRow(enemyThreeCurrentPosition)) {
+        if (vacantBottomRight(enemyThreeCurrentPosition)) {
+          if (route < 2) {
+            enemyThreeCurrentPosition += width
+          } else {
+            enemyThreeCurrentPosition++
+          }
+        } else if (vacantBottom(enemyThreeCurrentPosition)) {
+          enemyThreeCurrentPosition += width
+        } else if (vacantRight(enemyThreeCurrentPosition)) {
+          enemyThreeCurrentPosition++
+        }
+      } else if (greaterThan(enemyThreeCurrentPosition) && !greaterThanRow(enemyThreeCurrentPosition)) {
+        if (vacantBottomLeft(enemyThreeCurrentPosition)) {
+          if (route < 2) {
+            enemyThreeCurrentPosition += width
+          } else {
+            enemyThreeCurrentPosition--
+          }
+        } else if (vacantBottom(enemyThreeCurrentPosition)) {
+          enemyThreeCurrentPosition += width
+        } else if (vacantLeft(enemyThreeCurrentPosition)) {
+          enemyThreeCurrentPosition--
+        } else if (vacantRight(enemyThreeCurrentPosition)) {
+          enemyThreeCurrentPosition == width
+        }
+      } else if (!greaterThan(enemyThreeCurrentPosition) && greaterThanRow(enemyThreeCurrentPosition)) {
+        if (vacantTopRight(enemyThreeCurrentPosition)) {
+          if (route < 2) {
+            enemyThreeCurrentPosition -= width
+          } else {
+            enemyThreeCurrentPosition++
+          }
+        } else if (vacantTop(enemyThreeCurrentPosition)) {
+          enemyThreeCurrentPosition -= width
+        } else if (vacantRight(enemyThreeCurrentPosition)) {
+          enemyThreeCurrentPosition++
+        }
+      } else if (!greaterThan(enemyThreeCurrentPosition) && !greaterThanRow(enemyThreeCurrentPosition)) {
+        if (vacantTopLeft(enemyThreeCurrentPosition)) {
+          if (route < 2) {
+            enemyThreeCurrentPosition -= width
+          } else {
+            enemyThreeCurrentPosition--
+          }
+        } else if (vacantTop(enemyThreeCurrentPosition)) {
+          enemyThreeCurrentPosition -= width
+        } else if (vacantLeft(enemyThreeCurrentPosition)) {
+          enemyThreeCurrentPosition--
+        }
+      } else if (greaterThan(enemyThreeCurrentPosition) && rowEqual(enemyThreeCurrentPosition)) {
+        if (vacantBottom(enemyThreeCurrentPosition)) {
+          enemyThreeCurrentPosition += width
+        } else if (vacantLeftRight) {
+          if (route < 2) {
+            enemyThreeCurrentPosition--
+          } else {
+            enemyThreeCurrentPosition++
+          }
+        }
+      } else if (!greaterThan(enemyThreeCurrentPosition) && rowEqual(enemyThreeCurrentPosition)) {
+        if (vacantBottomTop(enemyThreeCurrentPosition)) {
+          enemyThreeCurrentPosition += width
+        } else if (vacantLeftRight) {
+          if (route < 2) {
+            enemyThreeCurrentPosition--
+          } else {
+            enemyThreeCurrentPosition++
+          }
+        }
+      }
+      addEnemyThree(enemyThreeCurrentPosition)
+    }, 1000)
+  }
+
+
+  //* ENEMY FOUR
+  function fourLocateCharacter() {
+    const whilstFourOutsideBox = setInterval(() => {
+      removeEnemyFour(enemyFourCurrentPosition)
+      const route = Math.floor(Math.random() * 4)
+      if (greaterThan(enemyFourCurrentPosition) && greaterThanRow(enemyFourCurrentPosition)) {
+        if (vacantBottomRight(enemyFourCurrentPosition)) {
+          if (route < 2) {
+            enemyFourCurrentPosition += width
+          } else {
+            enemyFourCurrentPosition++
+          }
+        } else if (vacantBottom(enemyFourCurrentPosition)) {
+          enemyFourCurrentPosition += width
+        } else if (vacantRight(enemyFourCurrentPosition)) {
+          enemyFourCurrentPosition++
+        }
+      } else if (greaterThan(enemyFourCurrentPosition) && !greaterThanRow(enemyFourCurrentPosition)) {
+        if (vacantBottomLeft(enemyFourCurrentPosition)) {
+          if (route < 2) {
+            enemyFourCurrentPosition += width
+          } else {
+            enemyFourCurrentPosition--
+          }
+        } else if (vacantBottom(enemyFourCurrentPosition)) {
+          enemyFourCurrentPosition += width
+        } else if (vacantLeft(enemyFourCurrentPosition)) {
+          enemyFourCurrentPosition--
+        } else if (vacantRight(enemyFourCurrentPosition)) {
+          enemyFourCurrentPosition == width
+        }
+      } else if (!greaterThan(enemyFourCurrentPosition) && greaterThanRow(enemyFourCurrentPosition)) {
+        if (vacantTopRight(enemyFourCurrentPosition)) {
+          if (route < 2) {
+            enemyFourCurrentPosition -= width
+          } else {
+            enemyFourCurrentPosition++
+          }
+        } else if (vacantTop(enemyFourCurrentPosition)) {
+          enemyFourCurrentPosition -= width
+        } else if (vacantRight(enemyFourCurrentPosition)) {
+          enemyFourCurrentPosition++
+        }
+      } else if (!greaterThan(enemyFourCurrentPosition) && !greaterThanRow(enemyFourCurrentPosition)) {
+        if (vacantTopLeft(enemyFourCurrentPosition)) {
+          if (route < 2) {
+            enemyFourCurrentPosition -= width
+          } else {
+            enemyFourCurrentPosition--
+          }
+        } else if (vacantTop(enemyFourCurrentPosition)) {
+          enemyFourCurrentPosition -= width
+        } else if (vacantLeft(enemyFourCurrentPosition)) {
+          enemyFourCurrentPosition--
+        }
+      } else if (greaterThan(enemyFourCurrentPosition) && rowEqual(enemyFourCurrentPosition)) {
+        if (vacantBottom(enemyFourCurrentPosition)) {
+          enemyFourCurrentPosition += width
+        } else if (vacantLeftRight) {
+          if (route < 2) {
+            enemyFourCurrentPosition--
+          } else {
+            enemyFourCurrentPosition++
+          }
+        }
+      } else if (!greaterThan(enemyFourCurrentPosition) && rowEqual(enemyFourCurrentPosition)) {
+        if (vacantBottomTop(enemyFourCurrentPosition)) {
+          enemyFourCurrentPosition += width
+        } else if (vacantLeftRight) {
+          if (route < 2) {
+            enemyFourCurrentPosition--
+          } else {
+            enemyFourCurrentPosition++
+          }
+        }
+      }
+      addEnemyFour(enemyFourCurrentPosition)
+    }, 1000)
   }
 
 
@@ -332,19 +672,31 @@ function init() {
 
 
 
+  //*END GAME LOGIC - CHECK FOR DEATH
+  function inCaseOfDeath() {
+    const inContactWithEnemy = setInterval(() => {
+      if (cells[characterCurrentPosition].classList.contains(enemyOneClass)) {
+        enemyHit.play()
+        removeCharacter(characterCurrentPosition)
+        removeEnemyOne(enemyOneCurrentPosition)
+        removeEnemyTwo(enemyTwoCurrentPosition)
+        removeEnemyThree(enemyThreeCurrentPosition)
+        removeEnemyFour(enemyFourCurrentPosition)
 
-
-
-
-
-
-
+        addCharacter(characterStartPosition)
+        addEnemyOne(enemyOneStartPosition)
+        addEnemyTwo(enemyTwoStartPosition)
+        addEnemyThree(enemyThreeStartPosition)
+        addEnemyFour(enemyFourStartPosition)
+        // createGrid(characterStartPosition, enemyOneStartPosition, enemyTwoStartPosition, enemyThreeStartPosition, enemyFourStartPosition)
+      }
+    }, 1000)
+  }
 
 
 
 
   //*END GAME LOGIC - COUNTS IF ANY DIVS CONTAIN ENERGIZER OR SURFACE CLASS
-
   function checkForWin() {
     const leftEnergizer = cells.filter(cell => cell.classList.contains('energizer'))
     if (!leftEnergizer.length) {
@@ -358,6 +710,8 @@ function init() {
       }
     }
   }
+
+
 
 
   //*AUDIO SETTINGS
@@ -390,6 +744,13 @@ function init() {
 
 
   window.addEventListener('load', enemyOneBoxOut)
+  window.addEventListener('load', enemyTwoBoxOut)
+  window.addEventListener('load', enemyThreeBoxOut)
+  window.addEventListener('load', enemyFourBoxOut)
+
+  window.addEventListener('load', inCaseOfDeath)
+  window.addEventListener('keydown', inCaseOfDeath)
+  window.addEventListener('keyup', inCaseOfDeath)
   window.addEventListener('keydown', checkForWin)
 
   audioButton.addEventListener('click', togglePlay)

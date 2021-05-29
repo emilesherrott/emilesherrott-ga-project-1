@@ -46,6 +46,16 @@ h1 {
   padding-left: 30px;
   max-width: 300px;
 }
+p {
+  margin: 10px 0;
+}
+.lives {
+  padding-top: 10px;
+}
+.heart {
+  width: 20px;
+  height: 20px;
+}
 
 
 /* GRID FEATURES */
