@@ -75,6 +75,12 @@ h1 {
   padding-left: 120px;
   margin: 0px;
 }
+
+#next-round {
+  transform: translateY(188px);
+  padding-left: 120px;
+  margin: 0px;
+}
 /* COLUMN2 */
 .column2 {
   margin-top: 104px;
@@ -126,17 +132,32 @@ p {
 
 
 /* BONUS ITEMS */
-.piggy-bank {
-  background-color: orange;
+.stations {
+  background-color: #0000;
 }
-.isa {
-  background-color: indigo;
+.whitechapel-road {
+  background-color: #8b4513;
 }
-.bonds {
-  background-color: darkgreen;
+.pentonville-road {
+  background-color: #ADD8E6;
 }
-.property {
-  background-color: navy;
+.northumberland-avenue {
+  background-color: #FF1493;
+}
+.vine-street {
+  background-color: #FFA502;
+}
+.trafalgar-square {
+  background-color: #FF0100;
+}
+.piccadilly {
+  background-color: #FFFF01;
+}
+.bond-street {
+  background-color: #008000;
+}
+.mayfair {
+  background-color: #0000FF;
 }
 
 

@@ -10,10 +10,12 @@ function init() {
   const playAgain = document.querySelector('#play-again')
   const createdBy = document.querySelector('#created-by')
   const newHighscore = document.querySelector('#new-highscore')
+  const nextRound = document.querySelector('#next-round')
 
   playAgain.style.display = 'none'
   createdBy.style.display = 'none'
   newHighscore.style.display = 'none'
+  nextRound.style.display = 'none'
 
   //*IN GAME LIFE ELEMENTS
   const bonusInformation = document.querySelector('#bonus-information')
@@ -28,10 +30,11 @@ function init() {
   //*AUDIO FUNCTIONALITY
   const audioButton = document.querySelector('.sound')
   const mainAudio = new Audio('audio/background.mp3')
-  const collectEnergizer = new Audio('audio/energize.wav')
-  const collectBonus = new Audio('audio/bonus.wav')
-  const enemyHit = new Audio('audio/enemy-hit.wav')
+  const collectEnergizerAudio = new Audio('audio/energize.wav')
+  const collectBonusAudio = new Audio('audio/bonus.wav')
+  const enemyHitAudio = new Audio('audio/enemy-hit.wav')
   const gameOverAudio = new Audio('audio/game-over.wav')
+  const gameWonAudio = new Audio('audio/jingle-win.wav')
 
 
   //*SCORING DISPLAY
@@ -93,11 +96,15 @@ function init() {
   let enemyFourCurrentPosition = 379
   let enemyFourClass = 'enemyFour'
 
+  //*ENEMY SPEED VARIABLE
+  let outOfBoxSpeed = 1000
+
 
 
   //*CREATE GRID NEEDS TO BE CALLED FOLLOWING CHARACTER INITIALISING (VARIABLES CAN'T BE HOISTED)
   createGrid(characterStartPosition, enemyOneStartPosition, enemyTwoStartPosition, enemyThreeStartPosition, enemyFourStartPosition)
-
+  addEnergize()
+  addSurface()
 
 
   function addCharacter(position) {
@@ -137,7 +144,7 @@ function init() {
   function energize() {
     if (cells[characterCurrentPosition].classList.contains('energizer')) {
       cells[characterCurrentPosition].classList.remove('energizer')
-      collectEnergizer.play()
+      collectEnergizerAudio.play()
       score += 90
     }
     currentScore.innerText = score
@@ -158,8 +165,8 @@ function init() {
 
   //*RANDOM ITEM SPAWN & ARRAY FACTS
   function bonusItem() {
-    const bonusArray = ['piggy-bank', 'isa', 'bonds', 'property']
-    let randomChoice = bonusArray[Math.floor(Math.random() * 4)]
+    const bonusArray = ['stations', 'whitechapel-road','pentonville-road','northumberland-avenue','vine-street', 'trafalgar-square', 'piccadilly', 'bond-street', 'mayfair']
+    let randomChoice = bonusArray[Math.floor(Math.random() * 9)]
     if (cells[461].classList.length <= 1) {
       cells[461].classList.add(randomChoice)
     }
@@ -170,32 +177,71 @@ function init() {
   function removeBonus(bonusName) {
     cells[461].classList.remove(bonusName)
     score += 30
-    collectBonus.play()
+    collectBonusAudio.play()
   }
   function bonusPoints() {
     let choice = Math.floor(Math.random() * 3)
 
-    if (characterCurrentPosition === 461 && cells[461].classList.contains('piggy-bank')) {
-      removeBonus('piggy-bank')
-      const piggyBankFacts = ['The earliest known \'piggy-shaped\' money box dates back to the 12th century on the island of Java.', 'The most famous piggy-bank is Hamm from Toy Story.', 'Some piggy banks have to be SMASHED to gain access... this isn\'t very economical.']
-      bonusInformation.innerText = piggyBankFacts[choice]
+    if (characterCurrentPosition === 461 && cells[461].classList.contains('stations')) {
+      cells[461].classList.remove('stations')
+      removeBonus('stations')
+      const stationFacts = [`Liverpool Street served over 65 million passengers in 2019`, `The land where Kings Cross Station stands originally cost £65,000. The stations recent refurbishments cost £650 million`, `Kings Cross St. Pancras Station is the most well connected underground station in the network, accomidating six lines.`]
+      bonusInformation.innerText = stationFacts[choice]
+    }
 
-    } else if (characterCurrentPosition === 461 && cells[461].classList.contains('isa')) {
-      cells[461].classList.remove('isa')
-      removeBonus('isa')
-      const isaFacts = ['Interest earned on all Cash ISA Savings are 100% tax free.', 'You need to be at least 16 years old to have an ISA.', 'Since ISAs were  launched in 1999 an estimated £8.74 trillion has been saved.']
-      bonusInformation.innerText = isaFacts[choice]
+    else if (characterCurrentPosition === 461 && cells[461].classList.contains('whitechapel-road')) {
+      cells[461].classList.remove('whitechapel-road')
+      removeBonus('whitechapel-road')
+      const whitechapelRoadFacts = [`Old Street is the only Monopoly location south of the River Thames`, `Old Street is the only Monopoly location outside && more than one stop away from the Circle Line`]
+      bonusInformation.innerText = whitechapelRoadFacts[choice]
+    }
 
-    } else if (characterCurrentPosition === 461 && cells[461].classList.contains('bonds')) {
-      cells[461].classList.remove('bonds')
-      removeBonus('bonds')
-      const bondsFacts = ['Bonds are issued by governments and corporations when they want to raise money.', 'Bonds move in the opposite direction to interest rates.', 'Bonds tend to be relatively safe but of course still come with risk.']
-      bonusInformation.innerText = bondsFacts[choice]
-    } else if (characterCurrentPosition === 461 && cells[461].classList.contains('property')) {
+    else if (characterCurrentPosition === 461 && cells[461].classList.contains('pentonville-road')) {
+      cells[461].classList.remove('pentonville-road')
+      removeBonus('pentonville-road')
+      const pentonvilleRoadFascts = [`The Angel, Islington, is a historic landmark and a series of buildings`, `Pentonville Road was built mid 18th century and became known for numerous factories following the arrival of London railways`, `When first built Euston Road was built using more than 10 million bricks`]
+      bonusInformation.innerText = pentonvilleRoadFascts[choice]
+    }
+
+    else if (characterCurrentPosition === 461 && cells[461].classList.contains('northumberland-avenue')) {
+      cells[461].classList.remove('northumberland-avenue')
+      removeBonus('northumberland-avenue')
+      const northumberlandAvenueFacts = [`Northumberland Avenue was built to accomodate luxury hotels`, `The average price of a house in Whitehall is £1,012,502. Compared to 100 Monopoly Dollars`, `The name Pall Mall is derived from a 17th centry ball game called 'pall-mall'`]
+      bonusInformation.innerText = northumberlandAvenueFacts[choice]
+    }
+
+    else if(characterCurrentPosition === 461 && cells[461].classList.contains('vine-street')) {
+      cells[461].classList.remove('vine-street')
+      removeBonus('vine-street')
+      const vineStreetFacts = [`Vine Street - the shortest street on the Monopoly Board - only 70 feet.`, `There is no actual Marlborough Street in this part of London, it was misnamed after Malborough Street Magistrates Court`, `Vine Street is named after the 18th Century public house, 'The Vine' which inturn may have been named after a Roman time vineyard which existed in the area`]
+      bonusInformation.innerText = vineStreetFacts[choice]
+    }
+
+    else if (characterCurrentPosition === 461 && cells[461].classList.contains('trafalgar-square')) {
+      cells[461].classList.remove('trafalgar-square')
+      removeBonus('trafalgar-square')
+      const trafalgarSquareFacts = [`Fleet Street became famous for print and publishing, by the 20th century most British national newspapers operated from here.`, `Strand was the first road in London to have a numbered address`, `Trafalgar Squares Lions were made from melted cannons`]
+      bonusInformation.innerText = trafalgarSquareFacts[choice]
+
+    } else if (characterCurrentPosition === 461 && cells[461].classList.contains('piccadilly')) {
+      cells[461].classList.remove('piccadilly')
+      removeBonus('piccadilly')
+      const piccadillyFacts = [`In 1612 Robert Baker made his wealth from the sale of Picadils, stiff collars worn the fashionable men in court, his house derisively become known as Picadil Hall, located in the area we now know as Piccadilly Circus.`, `The adverts at Piccadilly Circus have been turned off twice: the funerals of Winston Churchill and Princess Diana`, `The 'circus' refers to it's a circle... or roundabout`]
+      bonusInformation.innerText = piccadillyFacts[choice]
+
+
+    } else if (characterCurrentPosition === 461 && cells[461].classList.contains('bond-street')) {
+      cells[461].classList.remove('bond-street')
+      removeBonus('bond-street')
+      const bondStreetFacts = [`There is no actual bond street, it's split into New / Old Bond Street`, `Oxford Street is Europes biggest shopping street, with around half a million daily visitors`, `Hamleys toy store is the oldest operating business of Regend Street`]
+      bonusInformation.innerText = bondStreetFacts[choice]
+
+
+    } else if (characterCurrentPosition === 461 && cells[461].classList.contains('mayfair')) {
       removeBonus('property')
-      cells[461].classList.remove('property')
-      const propertyFacts = ['London\'s average house price is £476,800. More than double the national average.', 'Liverpool has the cheapest average price for a UK city, with prices averaging £122,300.', 'Lloyds Banking Group and Nationwide Building Society retained their crowns and the first and second biggest BTL mortgage lenders in the UK.']
-      bonusInformation.innerText = propertyFacts[choice]
+      cells[461].classList.remove('mayfair')
+      const mayfairFacts = [`Real house prices in Mayfair aren't 200 Monolopoly Dollars, they average £2,584,791`, `Like Monopoly, Mayfair, City of Westminster is London's most expensive borough. Here you'll find Savile Row and Burlington Arcade`, `Mayfair is named after the annual fortnight-long 'May Fair' that ran between 1686 and 1764`]
+      bonusInformation.innerText = mayfairFacts[choice]
     }
   }
 
@@ -270,22 +316,18 @@ function init() {
   //*ENEMY ONE
   function enemyOneBoxOut() {
     const whilstOneInBox = setInterval(() => {
-      if (enemyWallsGateBottom(enemyOneCurrentPosition)) {
+      if (enemyOneCurrentPosition === 321) {
         oneLocateCharacter()
         clearInterval(whilstOneInBox)
       }
       removeEnemyOne(enemyOneCurrentPosition)
-      if (enemyWallsTopBottomLeft(enemyOneCurrentPosition)) {
+      if (enemyOneCurrentPosition === 376) {
         enemyOneCurrentPosition += 1
       }
-      else if (enemyWallsTopBottomRight(enemyOneCurrentPosition)) {
-        enemyOneCurrentPosition -= 1
-      }
-      else if (enemyWallsBottom(enemyOneCurrentPosition)) {
-
+      else if (enemyOneCurrentPosition === 377) {
         enemyOneCurrentPosition -= width
       }
-      else if (enemyWallsGateCurrent(enemyOneCurrentPosition)) {
+      else if (enemyOneCurrentPosition === 349) {
         enemyOneCurrentPosition -= width
       }
       addEnemyOne(enemyOneCurrentPosition)
@@ -295,7 +337,7 @@ function init() {
   //*ENEMY TWO
   function enemyTwoBoxOut() {
     const whilstTwoInBox = setInterval(() => {
-      if (enemyTwoCurrentPosition === 317) {
+      if (enemyTwoCurrentPosition === 401) {
         twoLocateCharacter()
         clearInterval(whilstTwoInBox)
       }
@@ -303,11 +345,29 @@ function init() {
       if (enemyTwoCurrentPosition === 377) {
         enemyTwoCurrentPosition -= width
       }
-      else if (enemyWallsLeft(enemyTwoCurrentPosition)) {
+      else if (enemyTwoCurrentPosition === 349) {
         enemyTwoCurrentPosition -= width
       }
-      else if (vacantLeft(enemyTwoCurrentPosition)) {
-        enemyTwoCurrentPosition--
+      else if (enemyTwoCurrentPosition === 321) {
+        enemyTwoCurrentPosition -= 1
+      }
+      else if (enemyTwoCurrentPosition === 320) {
+        enemyTwoCurrentPosition -= 1
+      }
+      else if (enemyTwoCurrentPosition === 319) {
+        enemyTwoCurrentPosition -= 1
+      }
+      else if (enemyTwoCurrentPosition === 318) {
+        enemyTwoCurrentPosition -= 1
+      }
+      else if (enemyTwoCurrentPosition === 317) {
+        enemyTwoCurrentPosition += width
+      }
+      else if (enemyTwoCurrentPosition === 345) {
+        enemyTwoCurrentPosition += width
+      }
+      else if (enemyTwoCurrentPosition === 373) {
+        enemyTwoCurrentPosition += width
       }
       addEnemyTwo(enemyTwoCurrentPosition)
     }, 1000)
@@ -317,7 +377,7 @@ function init() {
   //*ENEMY THREE
   function enemyThreeBoxOut() {
     const whilstThreeInBox = setInterval(() => {
-      if (enemyThreeCurrentPosition === 326) {
+      if (enemyThreeCurrentPosition === 410) {
         threeLocateCharacter()
         clearInterval(whilstThreeInBox)
       }
@@ -325,11 +385,32 @@ function init() {
       if (enemyThreeCurrentPosition === 378) {
         enemyThreeCurrentPosition -= width
       }
-      else if (enemyWallsRight(enemyThreeCurrentPosition)) {
+      else if (enemyThreeCurrentPosition === 350) {
         enemyThreeCurrentPosition -= width
       }
-      else if (vacantRight(enemyThreeCurrentPosition)) {
-        enemyThreeCurrentPosition++
+      else if (enemyThreeCurrentPosition === 322) {
+        enemyThreeCurrentPosition += 1
+      }
+      else if (enemyThreeCurrentPosition === 320) {
+        enemyThreeCurrentPosition += 1
+      }
+      else if (enemyThreeCurrentPosition === 323) {
+        enemyThreeCurrentPosition += 1
+      }
+      else if (enemyThreeCurrentPosition === 324) {
+        enemyThreeCurrentPosition += 1
+      }
+      else if (enemyThreeCurrentPosition === 325) {
+        enemyThreeCurrentPosition += 1
+      }
+      else if (enemyThreeCurrentPosition === 326) {
+        enemyThreeCurrentPosition += width
+      }
+      else if (enemyThreeCurrentPosition === 354) {
+        enemyThreeCurrentPosition += width
+      }
+      else if (enemyThreeCurrentPosition === 382) {
+        enemyThreeCurrentPosition += width
       }
       addEnemyThree(enemyThreeCurrentPosition)
     }, 1000)
@@ -449,7 +530,7 @@ function init() {
         }
       }
       addEnemyOne(enemyOneCurrentPosition)
-    }, 1000)
+    }, outOfBoxSpeed)
   }
 
 
@@ -530,7 +611,7 @@ function init() {
         }
       }
       addEnemyTwo(enemyTwoCurrentPosition)
-    }, 1000)
+    }, outOfBoxSpeed)
   }
 
 
@@ -612,7 +693,7 @@ function init() {
         }
       }
       addEnemyThree(enemyThreeCurrentPosition)
-    }, 1000)
+    }, outOfBoxSpeed)
   }
 
 
@@ -693,7 +774,7 @@ function init() {
         }
       }
       addEnemyFour(enemyFourCurrentPosition)
-    }, 1000)
+    }, outOfBoxSpeed)
   }
 
 
@@ -729,22 +810,21 @@ function init() {
   }
 
 
-function newHighNewColor() {
-  let r = Math.floor(Math.random()*255+1)
-  let g = Math.floor(Math.random()*255+1)
-  let b = Math.floor(Math.random()*255+1)
-  let randomColor = `rgb(${r},${g},${b})`
-  newHighscore.style.color = randomColor
-}
-
-
+  function newHighNewColor() {
+    let r = Math.floor(Math.random() * 255 + 1)
+    let g = Math.floor(Math.random() * 255 + 1)
+    let b = Math.floor(Math.random() * 255 + 1)
+    let randomColor = `rgb(${r},${g},${b})`
+    newHighscore.style.color = randomColor
+    nextRound.style.color = randomColor
+  }
 
 
   function inCaseOfDeath() {
     if (cells[characterCurrentPosition].classList.contains(enemyOneClass) || cells[characterCurrentPosition].classList.contains(enemyTwoClass) || cells[characterCurrentPosition].classList.contains(enemyThreeClass) || cells[characterCurrentPosition].classList.contains(enemyFourClass)) {
-      characterLives > 1 ? enemyHit.play() : gameOverAudio.play()
+      characterLives > 1 || characterLives < 0 ? enemyHitAudio.play() : gameOverAudio.play()
       resetBoard()
-      characterLives -=1
+      characterLives -= 1
       if (characterLives === 2) {
         heart3.style.display = 'none'
       }
@@ -755,9 +835,9 @@ function newHighNewColor() {
       if (characterLives < 1) {
         clearDisplay()
         setTimeout(() => {
-        playAgain.style.display = 'block'
-        createdBy.style.display = 'block'
-      }, 4600)
+          playAgain.style.display = 'block'
+          createdBy.style.display = 'block'
+        }, 4600)
         localStorage.setItem('highest-score', high)
         if (score > localStorage.getItem('highest-score')) {
           high = score
@@ -765,7 +845,12 @@ function newHighNewColor() {
             newHighscore.style.display = 'block'
           }, 4600)
         }
+        enemyHitAudio.pause()
+
       }
+
+
+
     }
   }
 
@@ -788,9 +873,16 @@ function newHighNewColor() {
     const leftEnergizer = cells.filter(cell => cell.classList.contains('energizer'))
     const leftSurface = cells.filter(cell => cell.classList.contains('surface'))
     if (!leftEnergizer.length && !leftSurface.length) {
-        clearDisplay()
-      }
+      gameWonAudio.play()
+      clearDisplay()
+      window.removeEventListener('keydown', checkForWin)
+      setTimeout(() => {
+        nextRound.style.display = 'block'
+      }, 4600)
+
+
     }
+  }
 
 
 
@@ -840,6 +932,18 @@ function newHighNewColor() {
   window.addEventListener('keydown', checkForWin)
 
   playAgain.addEventListener('click', reload)
+  nextRound.addEventListener('click', () => {
+    console.log('click')
+    bonusInformation.style.display = 'block'
+    lives.style.display = 'block'
+    topContainer.classList.toggle('game-over-top-container-transition')
+    gridWrapper.classList.toggle('game-over-grid-wrapper-display')
+    gridWrapper.classList.toggle('game-over-grid-wrapper-transition')
+    addEnergize()
+    addSurface()
+    resetBoard()
+    outOfBoxSpeed -= 200
+  })
   audioButton.addEventListener('click', togglePlay)
   window.addEventListener('keydown', playMusic)
 
@@ -913,122 +1017,125 @@ function newHighNewColor() {
 
   //*BACKGROUND FUNCTIONALITY
   //*BOARD FLOOR - SURFACE CLASS
-  function playingSurface(numStart, numEnd) {
-    for (let i = numStart; i <= numEnd; i++) {
-      cells[i].classList.add('surface')
-    }
-  }
-  playingSurface(29, 40)
-  playingSurface(43, 54)
-  playingSurface(141, 166)
-  playingSurface(225, 230)
-  playingSurface(255, 230)
-  playingSurface(233, 236)
-  playingSurface(239, 242)
-  playingSurface(245, 250)
-  playingSurface(561, 572)
-  playingSurface(575, 586)
-  playingSurface(646, 647)
-  playingSurface(650, 656)
-  playingSurface(658, 665)
-  playingSurface(668, 669)
-  playingSurface(729, 734)
-  playingSurface(737, 740)
-  playingSurface(743, 746)
-  playingSurface(749, 754)
-  playingSurface(813, 838)
-  function surfaceSingle(num) {
-    cells[num].classList.add('surface')
-  }
-  surfaceSingle(57)
-  surfaceSingle(62)
-  surfaceSingle(68)
-  surfaceSingle(71)
-  surfaceSingle(77)
-  surfaceSingle(82)
-  surfaceSingle(90)
-  surfaceSingle(96)
-  surfaceSingle(99)
-  surfaceSingle(105)
-  surfaceSingle(113)
-  surfaceSingle(118)
-  surfaceSingle(124)
-  surfaceSingle(127)
-  surfaceSingle(133)
-  surfaceSingle(138)
-  surfaceSingle(169)
-  surfaceSingle(174)
-  surfaceSingle(177)
-  surfaceSingle(186)
-  surfaceSingle(189)
-  surfaceSingle(194)
-  surfaceSingle(197)
-  surfaceSingle(202)
-  surfaceSingle(205)
-  surfaceSingle(214)
-  surfaceSingle(217)
-  surfaceSingle(222)
-  surfaceSingle(258)
-  surfaceSingle(273)
-  surfaceSingle(286)
-  surfaceSingle(301)
-  surfaceSingle(314)
-  surfaceSingle(329)
-  surfaceSingle(342)
-  surfaceSingle(357)
-  surfaceSingle(370)
-  surfaceSingle(385)
-  surfaceSingle(398)
-  surfaceSingle(413)
-  surfaceSingle(426)
-  surfaceSingle(441)
-  surfaceSingle(454)
-  surfaceSingle(469)
-  surfaceSingle(482)
-  surfaceSingle(497)
-  surfaceSingle(510)
-  surfaceSingle(525)
-  surfaceSingle(538)
-  surfaceSingle(553)
-  surfaceSingle(589)
-  surfaceSingle(594)
-  surfaceSingle(600)
-  surfaceSingle(603)
-  surfaceSingle(609)
-  surfaceSingle(614)
-  surfaceSingle(617)
-  surfaceSingle(622)
-  surfaceSingle(628)
-  surfaceSingle(631)
-  surfaceSingle(637)
-  surfaceSingle(642)
-  surfaceSingle(675)
-  surfaceSingle(678)
-  surfaceSingle(681)
-  surfaceSingle(690)
-  surfaceSingle(693)
-  surfaceSingle(696)
-  surfaceSingle(675)
-  surfaceSingle(678)
-  surfaceSingle(681)
-  surfaceSingle(690)
-  surfaceSingle(693)
-  surfaceSingle(696)
-  surfaceSingle(703)
-  surfaceSingle(706)
-  surfaceSingle(709)
-  surfaceSingle(718)
-  surfaceSingle(721)
-  surfaceSingle(724)
-  surfaceSingle(757)
-  surfaceSingle(768)
-  surfaceSingle(771)
-  surfaceSingle(782)
-  surfaceSingle(785)
-  surfaceSingle(796)
-  surfaceSingle(799)
-  surfaceSingle(810)
 
+  function addSurface() {
+
+    function playingSurface(numStart, numEnd) {
+      for (let i = numStart; i <= numEnd; i++) {
+        cells[i].classList.add('surface')
+      }
+    }
+    playingSurface(29, 40)
+    playingSurface(43, 54)
+    playingSurface(141, 166)
+    playingSurface(225, 230)
+    playingSurface(255, 230)
+    playingSurface(233, 236)
+    playingSurface(239, 242)
+    playingSurface(245, 250)
+    playingSurface(561, 572)
+    playingSurface(575, 586)
+    playingSurface(646, 647)
+    playingSurface(650, 656)
+    playingSurface(658, 665)
+    playingSurface(668, 669)
+    playingSurface(729, 734)
+    playingSurface(737, 740)
+    playingSurface(743, 746)
+    playingSurface(749, 754)
+    playingSurface(813, 838)
+    function surfaceSingle(num) {
+      cells[num].classList.add('surface')
+    }
+    surfaceSingle(57)
+    surfaceSingle(62)
+    surfaceSingle(68)
+    surfaceSingle(71)
+    surfaceSingle(77)
+    surfaceSingle(82)
+    surfaceSingle(90)
+    surfaceSingle(96)
+    surfaceSingle(99)
+    surfaceSingle(105)
+    surfaceSingle(113)
+    surfaceSingle(118)
+    surfaceSingle(124)
+    surfaceSingle(127)
+    surfaceSingle(133)
+    surfaceSingle(138)
+    surfaceSingle(169)
+    surfaceSingle(174)
+    surfaceSingle(177)
+    surfaceSingle(186)
+    surfaceSingle(189)
+    surfaceSingle(194)
+    surfaceSingle(197)
+    surfaceSingle(202)
+    surfaceSingle(205)
+    surfaceSingle(214)
+    surfaceSingle(217)
+    surfaceSingle(222)
+    surfaceSingle(258)
+    surfaceSingle(273)
+    surfaceSingle(286)
+    surfaceSingle(301)
+    surfaceSingle(314)
+    surfaceSingle(329)
+    surfaceSingle(342)
+    surfaceSingle(357)
+    surfaceSingle(370)
+    surfaceSingle(385)
+    surfaceSingle(398)
+    surfaceSingle(413)
+    surfaceSingle(426)
+    surfaceSingle(441)
+    surfaceSingle(454)
+    surfaceSingle(469)
+    surfaceSingle(482)
+    surfaceSingle(497)
+    surfaceSingle(510)
+    surfaceSingle(525)
+    surfaceSingle(538)
+    surfaceSingle(553)
+    surfaceSingle(589)
+    surfaceSingle(594)
+    surfaceSingle(600)
+    surfaceSingle(603)
+    surfaceSingle(609)
+    surfaceSingle(614)
+    surfaceSingle(617)
+    surfaceSingle(622)
+    surfaceSingle(628)
+    surfaceSingle(631)
+    surfaceSingle(637)
+    surfaceSingle(642)
+    surfaceSingle(675)
+    surfaceSingle(678)
+    surfaceSingle(681)
+    surfaceSingle(690)
+    surfaceSingle(693)
+    surfaceSingle(696)
+    surfaceSingle(675)
+    surfaceSingle(678)
+    surfaceSingle(681)
+    surfaceSingle(690)
+    surfaceSingle(693)
+    surfaceSingle(696)
+    surfaceSingle(703)
+    surfaceSingle(706)
+    surfaceSingle(709)
+    surfaceSingle(718)
+    surfaceSingle(721)
+    surfaceSingle(724)
+    surfaceSingle(757)
+    surfaceSingle(768)
+    surfaceSingle(771)
+    surfaceSingle(782)
+    surfaceSingle(785)
+    surfaceSingle(796)
+    surfaceSingle(799)
+    surfaceSingle(810)
+  }
 
   //*VOID BOARD SPACE - CLASS EMPTY-BACKGROUND
   function emptyGrid(numStart, numEnd) {
@@ -1219,14 +1326,18 @@ function newHighNewColor() {
 
 
   //*DOTS & ENERGIZER
-  function energizerGrid(num) {
-    cells[num].classList.add('surface')
-    cells[num].classList.add('energizer')
-  }
 
-  energizerGrid(645)
-  energizerGrid(670)
-  energizerGrid(85)
-  energizerGrid(110)
+  function addEnergize() {
+
+    function energizerGrid(num) {
+      cells[num].classList.add('surface')
+      cells[num].classList.add('energizer')
+    }
+
+    energizerGrid(645)
+    energizerGrid(670)
+    energizerGrid(85)
+    energizerGrid(110)
+  }
 }
 window.addEventListener('DOMContentLoaded', init)
