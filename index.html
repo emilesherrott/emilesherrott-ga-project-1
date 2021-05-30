@@ -14,42 +14,40 @@
 
 <body>
   <main>
-    <h1>Raise Finances</h1>
-    <div class="sound"></div>
-    <div class="top-container">
-      <p>Current Score <span id="current-score"></span></p>
-      <p>High Score <span id="high-score"></span></p>
-    </div>
-    <div class="grid-wrapper">
-      <div class="grid"></div>
-      <div class="col1">
-        <div class="game-over">
-          <h2>Game Over</h2>
-          <p>Score <span id="game-over-score"></span></p>
-          <form id="end-score-form">
-            <label for="name">Username</label>
-            <input type="text" id="score-name">
-            <input type="submit" id="submit">
-          </form>
+    <div class="column1">
+      <h1>Raise Finances</h1>
+      <div class="sound"></div>
+      <div class="column1-info">
+        <div class="top-container">
+          <p>Current Score <span id="current-score"></span></p>
+          <p>High Score <span id="high-score"></span></p>
+          <p id="play-again"><span>Play Again</span></p>
+          <div id="created-by">
+            <p><span id="emile">Emile Sherrott</span></p>
+            <div id="social-media">
+              <a href="https://www.linkedin.com/in/emilesherrott" target="_blank"><img src="gifs/linkedin.png"
+                  id="linked" alt="linked in logo" width="70px" height="70px" /></a>
+              <a href="https://github.com/emilesherrott" target="_blank"><img src="gifs/git-hub.png" id="git"
+                  alt="git hub logo" width="70px" height="70px" /></a>
+            </div>
+          </div>
+          <div class="grid-wrapper">
+            <div class="grid"></div>
+          </div>
+          <div class="lives">
+            <p>Lives</p>
+            <img id="heart1" src="gifs/heart.png" alt="heart" class="heart" />
+            <img id="heart2" src="gifs/heart.png" alt="heart" class="heart" />
+            <img id="heart3" src="gifs/heart.png" alt="heart" class="heart" />
+          </div>
         </div>
-        <div>
-        <div id="display-results"></div>
+        <div id="new-highscore">
+          <h2>New HighScore</h2>
         </div>
       </div>
-      <div class="col2">
-      <div id="info-element">
-        <h2>Leaderboard</h2>
-        <ol id="ol-board">
-
-        </ol>
-      </div>
-      </div>
     </div>
-    <div class="lives">
-      Lives
-      <img id="heart1" src="gifs/heart.png" alt="heart" class="heart" />
-      <img id="heart2" src="gifs/heart.png" alt="heart" class="heart" />
-      <img id="heart3" src="gifs/heart.png" alt="heart" class="heart" />
+    <div class="column2">
+      <div id="bonus-information"></div>
     </div>
   </main>
 </body>
