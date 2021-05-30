@@ -710,23 +710,13 @@ function init() {
     removeEnemyTwo(enemyTwoCurrentPosition)
     removeEnemyThree(enemyThreeCurrentPosition)
     removeEnemyFour(enemyFourCurrentPosition)
-    addCharacter(characterStartPosition)
-    addEnemyOne(enemyOneStartPosition)
-    addEnemyTwo(enemyTwoStartPosition)
-    addEnemyThree(enemyThreeStartPosition)
-    addEnemyFour(enemyFourStartPosition)
+    characterCurrentPosition = 657
+    enemyOneCurrentPosition = 376
+    enemyTwoCurrentPosition = 377
+    enemyThreeCurrentPosition = 378
+    enemyFourCurrentPosition = 379
   }
 
-  function reduceLife() {
-    characterLives--
-    if (characterLives === 3) {
-      lives.removeChild(heart1)
-    } else if (characterLives === 2) {
-      lives.removeChild(heart2)
-    } else if (characterLives < 1) {
-      lives.removeChild(heart3)
-    }
-  }
 
   function clearDisplay() {
     bonusInformation.style.display = 'none'
@@ -735,10 +725,9 @@ function init() {
     gridWrapper.classList.toggle('game-over-grid-wrapper-transition')
     setTimeout(() => {
       gridWrapper.classList.toggle('game-over-grid-wrapper-display')
-      playAgain.style.display = 'block'
-      createdBy.style.display = 'block'
     }, 4600)
   }
+
 
 function newHighNewColor() {
   let r = Math.floor(Math.random()*255+1)
@@ -752,16 +741,24 @@ function newHighNewColor() {
 
 
   function inCaseOfDeath() {
-    if (cells[characterCurrentPosition].classList.contains(enemyOneClass)) {
-      enemyHit.play()
+    if (cells[characterCurrentPosition].classList.contains(enemyOneClass) || cells[characterCurrentPosition].classList.contains(enemyTwoClass) || cells[characterCurrentPosition].classList.contains(enemyThreeClass) || cells[characterCurrentPosition].classList.contains(enemyFourClass)) {
+      characterLives > 1 ? enemyHit.play() : gameOverAudio.play()
       resetBoard()
-      reduceLife()
+      characterLives -=1
+      if (characterLives === 2) {
+        heart3.style.display = 'none'
+      }
+      if (characterLives === 1) {
+        heart2.style.display = 'none'
+      }
+
       if (characterLives < 1) {
-        gameOverAudio.play()
         clearDisplay()
-
+        setTimeout(() => {
+        playAgain.style.display = 'block'
+        createdBy.style.display = 'block'
+      }, 4600)
         localStorage.setItem('highest-score', high)
-
         if (score > localStorage.getItem('highest-score')) {
           high = score
           setTimeout(() => {
@@ -789,17 +786,12 @@ function newHighNewColor() {
   //*END GAME LOGIC - COUNTS IF ANY DIVS CONTAIN ENERGIZER OR SURFACE CLASS
   function checkForWin() {
     const leftEnergizer = cells.filter(cell => cell.classList.contains('energizer'))
-    if (!leftEnergizer.length) {
-      const leftSurface = cells.filter(cell => cell.classList.contains('surface'))
-      if (!leftSurface.length) {
-        bonusInformation.innerText = ''
-        gridWrapper.removeChild(grid)
-        const winnerBanner = document.createElement('h2')
-        winnerBanner.innerText = 'YOU RAISED THE BAR! \n \nGREAT JOB'
-        main.appendChild(winnerBanner)
+    const leftSurface = cells.filter(cell => cell.classList.contains('surface'))
+    if (!leftEnergizer.length && !leftSurface.length) {
+        clearDisplay()
       }
     }
-  }
+
 
 
 
