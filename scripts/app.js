@@ -192,7 +192,7 @@ function init() {
     else if (characterCurrentPosition === 461 && cells[461].classList.contains('whitechapel-road')) {
       cells[461].classList.remove('whitechapel-road')
       removeBonus('whitechapel-road')
-      const whitechapelRoadFacts = [`Old Street is the only Monopoly location south of the River Thames`, `Old Street is the only Monopoly location outside && more than one stop away from the Circle Line`]
+      const whitechapelRoadFacts = [`Old Street is the only Monopoly location south of the River Thames`, `Old Street is the only Monopoly location outside && more than one stop away from the Circle Line`, `Whitechapel Road is named after a small chapel dedicaed to St Mary`]
       bonusInformation.innerText = whitechapelRoadFacts[choice]
     }
 
