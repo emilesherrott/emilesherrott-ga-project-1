@@ -120,6 +120,9 @@ p {
 .enemy-gate {
   background-color: burlywood;
 }
+.inner-enemy-wall {
+  background-color: #880000;
+}
 
 
 /* SCORE ITEMS */
