@@ -20,7 +20,7 @@ function init() {
   //*IN GAME LIFE ELEMENTS
   const bonusInformation = document.querySelector('#bonus-information')
   const lives = document.querySelector('.lives')
-  const heart1 = document.querySelector('#heart1')
+  // const heart1 = document.querySelector('#heart1')
   const heart2 = document.querySelector('#heart2')
   const heart3 = document.querySelector('#heart3')
 
@@ -288,12 +288,12 @@ function init() {
   const innerEnemyWallBottomRight = enemyCurrentPosition => cells[enemyCurrentPosition + width].classList.contains('inner-enemy-wall') && cells[enemyCurrentPosition + 1].classList.contains('inner-enemy-wall')
   const enemyWallsGateCurrent = enemyCurrentPosition => cells[enemyCurrentPosition].classList.contains('enemy-gate')
 
-  const enemyWallsTopBottomRight = enemyCurrentPosition => cells[enemyCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyCurrentPosition + 1].classList.contains('enemy-wall')
-  const enemyWallsTopBottomLeft = enemyCurrentPosition => cells[enemyCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyCurrentPosition - 1].classList.contains('enemy-wall')
-  const enemyWallsBottom = enemyCurrentPosition => cells[enemyCurrentPosition + width].classList.contains('enemy-wall')
-  const enemyWallsGateBottom = enemyCurrentPosition => cells[enemyCurrentPosition + width].classList.contains('enemy-gate')
-  const enemyWallsLeft = enemyCurrentPosition => cells[enemyCurrentPosition--].classList.contains('enemy-gate')
-  const enemyWallsRight = enemyCurrentPosition => cells[enemyCurrentPosition++].classList.contains('enemy-gate')
+  // const enemyWallsTopBottomRight = enemyCurrentPosition => cells[enemyCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyCurrentPosition + 1].classList.contains('enemy-wall')
+  // const enemyWallsTopBottomLeft = enemyCurrentPosition => cells[enemyCurrentPosition - width].classList.contains('enemy-wall') && cells[enemyCurrentPosition + width].classList.contains('enemy-wall') && cells[enemyCurrentPosition - 1].classList.contains('enemy-wall')
+  // const enemyWallsBottom = enemyCurrentPosition => cells[enemyCurrentPosition + width].classList.contains('enemy-wall')
+  // const enemyWallsGateBottom = enemyCurrentPosition => cells[enemyCurrentPosition + width].classList.contains('enemy-gate')
+  // const enemyWallsLeft = enemyCurrentPosition => cells[enemyCurrentPosition--].classList.contains('enemy-gate')
+  // const enemyWallsRight = enemyCurrentPosition => cells[enemyCurrentPosition++].classList.contains('enemy-gate')
 
 
 
@@ -304,48 +304,48 @@ function init() {
   const vacantTop = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall')
   const vacantTopRight = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
   const vacantRight = enemyCurrentPosition => !(cells[enemyCurrentPosition + 1].classList.contains('wall'))
-  const vacantTopBottomRight = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
+  // const vacantTopBottomRight = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
   const vacantBottomRight = enemyCurrentPosition => !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
   const vacantBottom = enemyCurrentPosition => !cells[enemyCurrentPosition + width].classList.contains('wall')
-  const vacantBottomLeftRight = enemyCurrentPosition => !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
+  // const vacantBottomLeftRight = enemyCurrentPosition => !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
   const vacantBottomLeft = enemyCurrentPosition => !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall')
-  const vacantTopBottomLeft = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall')
+  // const vacantTopBottomLeft = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall')
   const vacantLeft = enemyCurrentPosition => !cells[enemyCurrentPosition - 1].classList.contains('wall')
   const vacantTopLeft = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall')
-  const vacantTopLeftRight = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
-  const vacantLeftRight = enemyCurrentPosition => !cells[enemyCurrentPosition - 1].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
-  const vacantTopBottom = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + width].classList.contains('wall')
-  const vacantAll = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall')
+  // const vacantTopLeftRight = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
+  // const vacantLeftRight = enemyCurrentPosition => !cells[enemyCurrentPosition - 1].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall')
+  // const vacantTopBottom = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + width].classList.contains('wall')
+  // const vacantAll = enemyCurrentPosition => !cells[enemyCurrentPosition - width].classList.contains('wall') && !cells[enemyCurrentPosition + width].classList.contains('wall') && !cells[enemyCurrentPosition + 1].classList.contains('wall') && !cells[enemyCurrentPosition - 1].classList.contains('wall')
 
 
-//*LOGIC TO DETERMINE ROW
-function characterRow(characterCurrentPosition) {
-  for (let i=characterCurrentPosition; i+28; i++) {
-    if ((i+1) % 28 === 0) {
-      let row = ((i+1) / 28)
-      return row
+  //*LOGIC TO DETERMINE ROW
+  function characterRow(characterCurrentPosition) {
+    for (let i = characterCurrentPosition; i + 28; i++) {
+      if ((i + 1) % 28 === 0) {
+        let row = ((i + 1) / 28)
+        return row
+      }
     }
   }
-}
 
 
-function enemyRow(enemyCurrentPosition) {
-  for (let i=enemyCurrentPosition; i+28; i++) {
-    if ((i+1) % 28 === 0) {
-      let row = ((i+1) / 28)
-      return row
+  function enemyRow(enemyCurrentPosition) {
+    for (let i = enemyCurrentPosition; i + 28; i++) {
+      if ((i + 1) % 28 === 0) {
+        let row = ((i + 1) / 28)
+        return row
+      }
     }
   }
-}
 
-console.log(characterRow(characterCurrentPosition))
-console.log(enemyRow(enemyOneCurrentPosition))
+  console.log(characterRow(characterCurrentPosition))
+  console.log(enemyRow(enemyOneCurrentPosition))
 
 
 
   //*LOGIC TO AVOID TRAPS
   const inTrapCharacterBottomRightGoUp = enemyCurrentPosition => enemyCurrentPosition === 186 || enemyCurrentPosition === 214 || enemyCurrentPosition === 242 || enemyCurrentPosition === 678 || enemyCurrentPosition === 706 || enemyCurrentPosition === 734 || enemyCurrentPosition === 690 || enemyCurrentPosition === 718 || enemyCurrentPosition === 746
- 
+
 
   const inTrapCharacterBottomRightGoLeft = enemyCurrentPosition => enemyCurrentPosition === 240 || enemyCurrentPosition === 241 || enemyCurrentPosition === 246 || enemyCurrentPosition === 247 || enemyCurrentPosition === 248 || enemyCurrentPosition === 249 || enemyCurrentPosition === 250 || enemyCurrentPosition === 733 || enemyCurrentPosition === 732 || enemyCurrentPosition === 731 || enemyCurrentPosition === 730 || enemyCurrentPosition === 745 || enemyCurrentPosition === 744 || enemyCurrentPosition === 743 || enemyCurrentPosition === 669 || enemyCurrentPosition === 414 || enemyCurrentPosition === 415 || enemyCurrentPosition === 416 || enemyCurrentPosition === 417 || enemyCurrentPosition === 418 || enemyCurrentPosition === 419
 
@@ -353,19 +353,19 @@ console.log(enemyRow(enemyOneCurrentPosition))
 
   const inTrapCharacterBottomLeftGoUp = enemyCurrentPosition => enemyCurrentPosition === 177 || enemyCurrentPosition === 205 || enemyCurrentPosition === 233 || enemyCurrentPosition === 681 || enemyCurrentPosition === 709 || enemyCurrentPosition === 737 || enemyCurrentPosition === 693 || enemyCurrentPosition === 721 || enemyCurrentPosition === 749
 
-  const inTrapCharacterBottomLeftGoRight = enemyCurrentPosition => enemyCurrentPosition === 234 || enemyCurrentPosition === 235 || enemyCurrentPosition === 226 || enemyCurrentPosition === 227 || enemyCurrentPosition === 228 || enemyCurrentPosition === 229 || enemyCurrentPosition === 246 || enemyCurrentPosition === 738 || enemyCurrentPosition === 739 || enemyCurrentPosition === 750 || enemyCurrentPosition === 751 || enemyCurrentPosition === 752 || enemyCurrentPosition === 753 || enemyCurrentPosition === 397 || enemyCurrentPosition === 396 || enemyCurrentPosition === 395 || enemyCurrentPosition === 394 || enemyCurrentPosition === 393 || enemyCurrentPosition === 392 || enemyCurrentPosition === 646
+  const inTrapCharacterBottomLeftGoRight = enemyCurrentPosition => enemyCurrentPosition === 234 || enemyCurrentPosition === 235 || enemyCurrentPosition === 225 || enemyCurrentPosition === 226 || enemyCurrentPosition === 227 || enemyCurrentPosition === 228 || enemyCurrentPosition === 229 || enemyCurrentPosition === 246 || enemyCurrentPosition === 738 || enemyCurrentPosition === 739 || enemyCurrentPosition === 750 || enemyCurrentPosition === 751 || enemyCurrentPosition === 752 || enemyCurrentPosition === 753 || enemyCurrentPosition === 397 || enemyCurrentPosition === 396 || enemyCurrentPosition === 395 || enemyCurrentPosition === 394 || enemyCurrentPosition === 393 || enemyCurrentPosition === 392 || enemyCurrentPosition === 646
 
 
 
-const inTrapCharacterTopRightGoDown = enemyCurrentPosition => enemyCurrentPosition === 40 || enemyCurrentPosition === 68 || enemyCurrentPosition === 96 || enemyCurrentPosition === 124 || enemyCurrentPosition === 236 || enemyCurrentPosition === 264 || enemyCurrentPosition === 292 || enemyCurrentPosition === 326 || enemyCurrentPosition === 354 || enemyCurrentPosition === 382 || enemyCurrentPosition === 572 || enemyCurrentPosition === 600 || enemyCurrentPosition === 628 || enemyCurrentPosition === 647 || enemyCurrentPosition === 675 || enemyCurrentPosition === 703 || enemyCurrentPosition === 740 || enemyCurrentPosition === 768 || enemyCurrentPosition === 796 
+  const inTrapCharacterTopRightGoDown = enemyCurrentPosition => enemyCurrentPosition === 40 || enemyCurrentPosition === 68 || enemyCurrentPosition === 96 || enemyCurrentPosition === 124 || enemyCurrentPosition === 236 || enemyCurrentPosition === 264 || enemyCurrentPosition === 292 || enemyCurrentPosition === 326 || enemyCurrentPosition === 354 || enemyCurrentPosition === 382 || enemyCurrentPosition === 572 || enemyCurrentPosition === 600 || enemyCurrentPosition === 628 || enemyCurrentPosition === 647 || enemyCurrentPosition === 675 || enemyCurrentPosition === 703 || enemyCurrentPosition === 740 || enemyCurrentPosition === 768 || enemyCurrentPosition === 796
 
-const inTrapCharacterTopRightGoLeft = enemyCurrentPosition => enemyCurrentPosition === 235 || enemyCurrentPosition === 234 || enemyCurrentPosition === 325 || enemyCurrentPosition === 324 || enemyCurrentPosition === 419 || enemyCurrentPosition === 418 || enemyCurrentPosition === 417 || enemyCurrentPosition === 416  || enemyCurrentPosition === 415 || enemyCurrentPosition === 414 || enemyCurrentPosition === 586 || enemyCurrentPosition === 585 || enemyCurrentPosition === 584 || enemyCurrentPosition === 583 || enemyCurrentPosition === 582 || enemyCurrentPosition === 571 || enemyCurrentPosition === 570 || enemyCurrentPosition === 647 || enemyCurrentPosition === 646 || enemyCurrentPosition === 739 || enemyCurrentPosition === 738 || enemyCurrentPosition === 754 || enemyCurrentPosition === 753
+  const inTrapCharacterTopRightGoLeft = enemyCurrentPosition => enemyCurrentPosition === 235 || enemyCurrentPosition === 234 || enemyCurrentPosition === 325 || enemyCurrentPosition === 324 || enemyCurrentPosition === 419 || enemyCurrentPosition === 418 || enemyCurrentPosition === 417 || enemyCurrentPosition === 416 || enemyCurrentPosition === 415 || enemyCurrentPosition === 414 || enemyCurrentPosition === 586 || enemyCurrentPosition === 585 || enemyCurrentPosition === 584 || enemyCurrentPosition === 583 || enemyCurrentPosition === 582 || enemyCurrentPosition === 571 || enemyCurrentPosition === 570 || enemyCurrentPosition === 647 || enemyCurrentPosition === 646 || enemyCurrentPosition === 739 || enemyCurrentPosition === 738 || enemyCurrentPosition === 754 || enemyCurrentPosition === 753
 
 
 
-const inTrapCharacterTopLeftGoDown = enemyCurrentPosition => enemyCurrentPosition === 43 || enemyCurrentPosition === 71 || enemyCurrentPosition === 99 || enemyCurrentPosition === 127 || enemyCurrentPosition === 239 || enemyCurrentPosition === 267 || enemyCurrentPosition === 295 || enemyCurrentPosition === 317 || enemyCurrentPosition === 345 || enemyCurrentPosition === 373 || enemyCurrentPosition === 575 || enemyCurrentPosition === 603 || enemyCurrentPosition === 631 || enemyCurrentPosition === 668 || enemyCurrentPosition === 696 || enemyCurrentPosition === 724 || enemyCurrentPosition === 743 || enemyCurrentPosition === 771 || enemyCurrentPosition === 799 
+  const inTrapCharacterTopLeftGoDown = enemyCurrentPosition => enemyCurrentPosition === 43 || enemyCurrentPosition === 71 || enemyCurrentPosition === 99 || enemyCurrentPosition === 127 || enemyCurrentPosition === 239 || enemyCurrentPosition === 267 || enemyCurrentPosition === 295 || enemyCurrentPosition === 317 || enemyCurrentPosition === 345 || enemyCurrentPosition === 373 || enemyCurrentPosition === 575 || enemyCurrentPosition === 603 || enemyCurrentPosition === 631 || enemyCurrentPosition === 668 || enemyCurrentPosition === 696 || enemyCurrentPosition === 724 || enemyCurrentPosition === 743 || enemyCurrentPosition === 771 || enemyCurrentPosition === 799
 
-const inTrapCharacterTopLeftGoRight = enemyCurrentPosition => enemyCurrentPosition === 240 || enemyCurrentPosition === 241 || enemyCurrentPosition === 318 || enemyCurrentPosition === 319 || enemyCurrentPosition === 392 || enemyCurrentPosition === 393 || enemyCurrentPosition === 394 || enemyCurrentPosition === 395  || enemyCurrentPosition === 396 || enemyCurrentPosition === 397 || enemyCurrentPosition === 561 || enemyCurrentPosition === 562 || enemyCurrentPosition === 563 || enemyCurrentPosition === 564 || enemyCurrentPosition === 565 || enemyCurrentPosition === 576 || enemyCurrentPosition === 577 || enemyCurrentPosition === 668 || enemyCurrentPosition === 669 || enemyCurrentPosition === 744 || enemyCurrentPosition === 745 || enemyCurrentPosition === 729 || enemyCurrentPosition === 730 && characterCurrentPosition !== 317
+  const inTrapCharacterTopLeftGoRight = enemyCurrentPosition => enemyCurrentPosition === 240 || enemyCurrentPosition === 241 || enemyCurrentPosition === 318 || enemyCurrentPosition === 319 || enemyCurrentPosition === 392 || enemyCurrentPosition === 393 || enemyCurrentPosition === 394 || enemyCurrentPosition === 395 || enemyCurrentPosition === 396 || enemyCurrentPosition === 397 || enemyCurrentPosition === 561 || enemyCurrentPosition === 562 || enemyCurrentPosition === 563 || enemyCurrentPosition === 564 || enemyCurrentPosition === 565 || enemyCurrentPosition === 576 || enemyCurrentPosition === 577 || enemyCurrentPosition === 668 || enemyCurrentPosition === 669 || enemyCurrentPosition === 744 || enemyCurrentPosition === 745 || enemyCurrentPosition === 729 || enemyCurrentPosition === 730 && characterCurrentPosition !== 317
 
 
 
@@ -388,9 +388,6 @@ const inTrapCharacterTopLeftGoRight = enemyCurrentPosition => enemyCurrentPositi
       } else if (enemyWallsGateCurrent(enemyOneCurrentPosition)) {
         enemyOneCurrentPosition -= width
       }
-
-//*DIRECT LEFT
-// else if (greaterThan(enemyOneCurrentPosition) && )
 
 
       //* DIRECT BELOW
@@ -501,483 +498,10 @@ const inTrapCharacterTopLeftGoRight = enemyCurrentPosition => enemyCurrentPositi
 
 
       addEnemyOne(enemyOneCurrentPosition)
+      inCaseOfDeath()
     }, initialSpeed)
   }
 
-
-
-
-
-
-
-
-
-
-
-  // //*MOVE ENEMY OUT OF BOX
-  // //*ENEMY ONE
-  // function enemyOneBoxOut() {
-  //   const whilstOneInBox = setInterval(() => {
-  //     if (enemyOneCurrentPosition === 321) {
-  //       oneLocateCharacter()
-  //       clearInterval(whilstOneInBox)
-  //     }
-  //     removeEnemyOne(enemyOneCurrentPosition)
-  //     if (enemyOneCurrentPosition === 376) {
-  //       enemyOneCurrentPosition += 1
-  //     }
-  //     else if (enemyOneCurrentPosition === 377) {
-  //       enemyOneCurrentPosition -= width
-  //     }
-  //     else if (enemyOneCurrentPosition === 349) {
-  //       enemyOneCurrentPosition -= width
-  //     }
-  //     addEnemyOne(enemyOneCurrentPosition)
-  //   }, 1000)
-  // }
-
-  // //*ENEMY TWO
-  // function enemyTwoBoxOut() {
-  //   const whilstTwoInBox = setInterval(() => {
-  //     if (enemyTwoCurrentPosition === 401) {
-  //       twoLocateCharacter()
-  //       clearInterval(whilstTwoInBox)
-  //     }
-  //     removeEnemyTwo(enemyTwoCurrentPosition)
-  //     if (enemyTwoCurrentPosition === 377) {
-  //       enemyTwoCurrentPosition -= width
-  //     }
-  //     else if (enemyTwoCurrentPosition === 349) {
-  //       enemyTwoCurrentPosition -= width
-  //     }
-  //     else if (enemyTwoCurrentPosition === 321) {
-  //       enemyTwoCurrentPosition -= 1
-  //     }
-  //     else if (enemyTwoCurrentPosition === 320) {
-  //       enemyTwoCurrentPosition -= 1
-  //     }
-  //     else if (enemyTwoCurrentPosition === 319) {
-  //       enemyTwoCurrentPosition -= 1
-  //     }
-  //     else if (enemyTwoCurrentPosition === 318) {
-  //       enemyTwoCurrentPosition -= 1
-  //     }
-  //     else if (enemyTwoCurrentPosition === 317) {
-  //       enemyTwoCurrentPosition += width
-  //     }
-  //     else if (enemyTwoCurrentPosition === 345) {
-  //       enemyTwoCurrentPosition += width
-  //     }
-  //     else if (enemyTwoCurrentPosition === 373) {
-  //       enemyTwoCurrentPosition += width
-  //     }
-  //     addEnemyTwo(enemyTwoCurrentPosition)
-  //   }, 1000)
-  // }
-
-
-  // //*ENEMY THREE
-  // function enemyThreeBoxOut() {
-  //   const whilstThreeInBox = setInterval(() => {
-  //     if (enemyThreeCurrentPosition === 410) {
-  //       threeLocateCharacter()
-  //       clearInterval(whilstThreeInBox)
-  //     }
-  //     removeEnemyThree(enemyThreeCurrentPosition)
-  //     if (enemyThreeCurrentPosition === 378) {
-  //       enemyThreeCurrentPosition -= width
-  //     }
-  //     else if (enemyThreeCurrentPosition === 350) {
-  //       enemyThreeCurrentPosition -= width
-  //     }
-  //     else if (enemyThreeCurrentPosition === 322) {
-  //       enemyThreeCurrentPosition += 1
-  //     }
-  //     else if (enemyThreeCurrentPosition === 320) {
-  //       enemyThreeCurrentPosition += 1
-  //     }
-  //     else if (enemyThreeCurrentPosition === 323) {
-  //       enemyThreeCurrentPosition += 1
-  //     }
-  //     else if (enemyThreeCurrentPosition === 324) {
-  //       enemyThreeCurrentPosition += 1
-  //     }
-  //     else if (enemyThreeCurrentPosition === 325) {
-  //       enemyThreeCurrentPosition += 1
-  //     }
-  //     else if (enemyThreeCurrentPosition === 326) {
-  //       enemyThreeCurrentPosition += width
-  //     }
-  //     else if (enemyThreeCurrentPosition === 354) {
-  //       enemyThreeCurrentPosition += width
-  //     }
-  //     else if (enemyThreeCurrentPosition === 382) {
-  //       enemyThreeCurrentPosition += width
-  //     }
-  //     addEnemyThree(enemyThreeCurrentPosition)
-  //   }, 1000)
-  // }
-
-
-  // //*ENEMY FOUR
-  // function enemyFourBoxOut() {
-  //   const whilstFourInBox = setInterval(() => {
-  //     if (enemyFourCurrentPosition === 295) {
-  //       fourLocateCharacter()
-  //       clearInterval(whilstFourInBox)
-  //     }
-  //     removeEnemyFour(enemyFourCurrentPosition)
-  //     if (enemyFourCurrentPosition === 379) {
-  //       enemyFourCurrentPosition--
-  //     } else if (enemyFourCurrentPosition === 378) {
-  //       enemyFourCurrentPosition--
-  //     } else if (enemyFourCurrentPosition === 377) {
-  //       enemyFourCurrentPosition -= width
-  //     } else if (enemyFourCurrentPosition === 349) {
-  //       enemyFourCurrentPosition++
-  //     } else if (enemyFourCurrentPosition === 350) {
-  //       enemyFourCurrentPosition -= width
-  //     } else if (enemyFourCurrentPosition === 349) {
-  //       enemyFourCurrentPosition++
-  //     } else if (enemyFourCurrentPosition === 350) {
-  //       enemyFourCurrentPosition -= width
-  //     } else if (enemyFourCurrentPosition === 322) {
-  //       enemyFourCurrentPosition++
-  //     } else if (enemyFourCurrentPosition === 323) {
-  //       enemyFourCurrentPosition -= width
-  //     }
-  //     addEnemyFour(enemyFourCurrentPosition)
-  //   }, 1000)
-  // }
-
-
-  // //*LOCATE MAIN CHARACTER
-  // //* ENEMY ONE
-  // function oneLocateCharacter() {
-  //   const whilstOneOutsideBox = setInterval(() => {
-  //     removeEnemyOne(enemyOneCurrentPosition)
-  //     if (cells[characterCurrentPosition].classList.contains(enemyOneClass)) {
-  //       removeEnemyOne(enemyOneCurrentPosition)
-  //     }
-  //     const route = Math.floor(Math.random() * 4)
-  //     if (greaterThan(enemyOneCurrentPosition) && greaterThanRow(enemyOneCurrentPosition)) {
-  //       if (vacantBottomRight(enemyOneCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyOneCurrentPosition += width
-  //         } else {
-  //           enemyOneCurrentPosition++
-  //         }
-  //       } else if (vacantBottom(enemyOneCurrentPosition)) {
-  //         enemyOneCurrentPosition += width
-  //       } else if (vacantRight(enemyOneCurrentPosition)) {
-  //         enemyOneCurrentPosition++
-  //       }
-  //     } else if (greaterThan(enemyOneCurrentPosition) && !greaterThanRow(enemyOneCurrentPosition)) {
-  //       if (vacantBottomLeft(enemyOneCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyOneCurrentPosition += width
-  //         } else {
-  //           enemyOneCurrentPosition--
-  //         }
-  //       } else if (vacantBottom(enemyOneCurrentPosition)) {
-  //         enemyOneCurrentPosition += width
-  //       } else if (vacantLeft(enemyOneCurrentPosition)) {
-  //         enemyOneCurrentPosition--
-  //       } else if (vacantRight(enemyOneCurrentPosition)) {
-  //         enemyOneCurrentPosition == width
-  //       }
-  //     } else if (!greaterThan(enemyOneCurrentPosition) && greaterThanRow(enemyOneCurrentPosition)) {
-  //       if (vacantTopRight(enemyOneCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyOneCurrentPosition -= width
-  //         } else {
-  //           enemyOneCurrentPosition++
-  //         }
-  //       } else if (vacantTop(enemyOneCurrentPosition)) {
-  //         enemyOneCurrentPosition -= width
-  //       } else if (vacantRight(enemyOneCurrentPosition)) {
-  //         enemyOneCurrentPosition++
-  //       }
-  //     } else if (!greaterThan(enemyOneCurrentPosition) && !greaterThanRow(enemyOneCurrentPosition)) {
-  //       if (vacantTopLeft(enemyOneCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyOneCurrentPosition -= width
-  //         } else {
-  //           enemyOneCurrentPosition--
-  //         }
-  //       } else if (vacantTop(enemyOneCurrentPosition)) {
-  //         enemyOneCurrentPosition -= width
-  //       } else if (vacantLeft(enemyOneCurrentPosition)) {
-  //         enemyOneCurrentPosition--
-  //       }
-  //     } else if (greaterThan(enemyOneCurrentPosition) && rowEqual(enemyOneCurrentPosition)) {
-  //       if (vacantBottom(enemyOneCurrentPosition)) {
-  //         enemyOneCurrentPosition += width
-  //       } else if (vacantLeftRight) {
-  //         if (route < 2) {
-  //           enemyOneCurrentPosition--
-  //         } else {
-  //           enemyOneCurrentPosition++
-  //         }
-  //       }
-  //     } else if (!greaterThan(enemyOneCurrentPosition) && rowEqual(enemyOneCurrentPosition)) {
-  //       if (vacantBottomTop(enemyOneCurrentPosition)) {
-  //         enemyOneCurrentPosition += width
-  //       } else if (vacantLeftRight) {
-  //         if (route < 2) {
-  //           enemyOneCurrentPosition--
-  //         } else {
-  //           enemyOneCurrentPosition++
-  //         }
-  //       }
-  //     }
-  //     addEnemyOne(enemyOneCurrentPosition)
-  //   }, outOfBoxSpeed)
-  // }
-
-
-  // //* ENEMY TWO
-  // function twoLocateCharacter() {
-  //   const whilstTwoOutsideBox = setInterval(() => {
-  //     removeEnemyTwo(enemyTwoCurrentPosition)
-  //     const route = Math.floor(Math.random() * 4)
-  //     if (greaterThan(enemyTwoCurrentPosition) && greaterThanRow(enemyTwoCurrentPosition)) {
-  //       if (vacantBottomRight(enemyTwoCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyTwoCurrentPosition += width
-  //         } else {
-  //           enemyTwoCurrentPosition++
-  //         }
-  //       } else if (vacantBottom(enemyTwoCurrentPosition)) {
-  //         enemyTwoCurrentPosition += width
-  //       } else if (vacantRight(enemyTwoCurrentPosition)) {
-  //         enemyTwoCurrentPosition++
-  //       }
-  //     } else if (greaterThan(enemyTwoCurrentPosition) && !greaterThanRow(enemyTwoCurrentPosition)) {
-  //       if (vacantBottomLeft(enemyTwoCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyTwoCurrentPosition += width
-  //         } else {
-  //           enemyTwoCurrentPosition--
-  //         }
-  //       } else if (vacantBottom(enemyTwoCurrentPosition)) {
-  //         enemyTwoCurrentPosition += width
-  //       } else if (vacantLeft(enemyTwoCurrentPosition)) {
-  //         enemyTwoCurrentPosition--
-  //       } else if (vacantRight(enemyTwoCurrentPosition)) {
-  //         enemyTwoCurrentPosition == width
-  //       }
-  //     } else if (!greaterThan(enemyTwoCurrentPosition) && greaterThanRow(enemyTwoCurrentPosition)) {
-  //       if (vacantTopRight(enemyTwoCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyTwoCurrentPosition -= width
-  //         } else {
-  //           enemyTwoCurrentPosition++
-  //         }
-  //       } else if (vacantTop(enemyTwoCurrentPosition)) {
-  //         enemyTwoCurrentPosition -= width
-  //       } else if (vacantRight(enemyTwoCurrentPosition)) {
-  //         enemyTwoCurrentPosition++
-  //       }
-  //     } else if (!greaterThan(enemyTwoCurrentPosition) && !greaterThanRow(enemyTwoCurrentPosition)) {
-  //       if (vacantTopLeft(enemyTwoCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyTwoCurrentPosition -= width
-  //         } else {
-  //           enemyTwoCurrentPosition--
-  //         }
-  //       } else if (vacantTop(enemyTwoCurrentPosition)) {
-  //         enemyTwoCurrentPosition -= width
-  //       } else if (vacantLeft(enemyTwoCurrentPosition)) {
-  //         enemyTwoCurrentPosition--
-  //       }
-  //     } else if (greaterThan(enemyTwoCurrentPosition) && rowEqual(enemyTwoCurrentPosition)) {
-  //       if (vacantBottom(enemyTwoCurrentPosition)) {
-  //         enemyTwoCurrentPosition += width
-  //       } else if (vacantLeftRight) {
-  //         if (route < 2) {
-  //           enemyTwoCurrentPosition--
-  //         } else {
-  //           enemyTwoCurrentPosition++
-  //         }
-  //       }
-  //     } else if (!greaterThan(enemyTwoCurrentPosition) && rowEqual(enemyTwoCurrentPosition)) {
-  //       if (vacantBottomTop(enemyTwoCurrentPosition)) {
-  //         enemyTwoCurrentPosition += width
-  //       } else if (vacantLeftRight) {
-  //         if (route < 2) {
-  //           enemyTwoCurrentPosition--
-  //         } else {
-  //           enemyTwoCurrentPosition++
-  //         }
-  //       }
-  //     }
-  //     addEnemyTwo(enemyTwoCurrentPosition)
-  //   }, outOfBoxSpeed)
-  // }
-
-
-
-  // //* ENEMY THREE
-  // function threeLocateCharacter() {
-  //   const whilstThreeOutsideBox = setInterval(() => {
-  //     removeEnemyThree(enemyThreeCurrentPosition)
-  //     const route = Math.floor(Math.random() * 4)
-  //     if (greaterThan(enemyThreeCurrentPosition) && greaterThanRow(enemyThreeCurrentPosition)) {
-  //       if (vacantBottomRight(enemyThreeCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyThreeCurrentPosition += width
-  //         } else {
-  //           enemyThreeCurrentPosition++
-  //         }
-  //       } else if (vacantBottom(enemyThreeCurrentPosition)) {
-  //         enemyThreeCurrentPosition += width
-  //       } else if (vacantRight(enemyThreeCurrentPosition)) {
-  //         enemyThreeCurrentPosition++
-  //       }
-  //     } else if (greaterThan(enemyThreeCurrentPosition) && !greaterThanRow(enemyThreeCurrentPosition)) {
-  //       if (vacantBottomLeft(enemyThreeCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyThreeCurrentPosition += width
-  //         } else {
-  //           enemyThreeCurrentPosition--
-  //         }
-  //       } else if (vacantBottom(enemyThreeCurrentPosition)) {
-  //         enemyThreeCurrentPosition += width
-  //       } else if (vacantLeft(enemyThreeCurrentPosition)) {
-  //         enemyThreeCurrentPosition--
-  //       } else if (vacantRight(enemyThreeCurrentPosition)) {
-  //         enemyThreeCurrentPosition == width
-  //       }
-  //     } else if (!greaterThan(enemyThreeCurrentPosition) && greaterThanRow(enemyThreeCurrentPosition)) {
-  //       if (vacantTopRight(enemyThreeCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyThreeCurrentPosition -= width
-  //         } else {
-  //           enemyThreeCurrentPosition++
-  //         }
-  //       } else if (vacantTop(enemyThreeCurrentPosition)) {
-  //         enemyThreeCurrentPosition -= width
-  //       } else if (vacantRight(enemyThreeCurrentPosition)) {
-  //         enemyThreeCurrentPosition++
-  //       }
-  //     } else if (!greaterThan(enemyThreeCurrentPosition) && !greaterThanRow(enemyThreeCurrentPosition)) {
-  //       if (vacantTopLeft(enemyThreeCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyThreeCurrentPosition -= width
-  //         } else {
-  //           enemyThreeCurrentPosition--
-  //         }
-  //       } else if (vacantTop(enemyThreeCurrentPosition)) {
-  //         enemyThreeCurrentPosition -= width
-  //       } else if (vacantLeft(enemyThreeCurrentPosition)) {
-  //         enemyThreeCurrentPosition--
-  //       }
-  //     } else if (greaterThan(enemyThreeCurrentPosition) && rowEqual(enemyThreeCurrentPosition)) {
-  //       if (vacantBottom(enemyThreeCurrentPosition)) {
-  //         enemyThreeCurrentPosition += width
-  //       } else if (vacantLeftRight) {
-  //         if (route < 2) {
-  //           enemyThreeCurrentPosition--
-  //         } else {
-  //           enemyThreeCurrentPosition++
-  //         }
-  //       }
-  //     } else if (!greaterThan(enemyThreeCurrentPosition) && rowEqual(enemyThreeCurrentPosition)) {
-  //       if (vacantBottomTop(enemyThreeCurrentPosition)) {
-  //         enemyThreeCurrentPosition += width
-  //       } else if (vacantLeftRight) {
-  //         if (route < 2) {
-  //           enemyThreeCurrentPosition--
-  //         } else {
-  //           enemyThreeCurrentPosition++
-  //         }
-  //       }
-  //     }
-  //     addEnemyThree(enemyThreeCurrentPosition)
-  //   }, outOfBoxSpeed)
-  // }
-
-
-  // //* ENEMY FOUR
-  // function fourLocateCharacter() {
-  //   const whilstFourOutsideBox = setInterval(() => {
-  //     removeEnemyFour(enemyFourCurrentPosition)
-  //     const route = Math.floor(Math.random() * 4)
-  //     if (greaterThan(enemyFourCurrentPosition) && greaterThanRow(enemyFourCurrentPosition)) {
-  //       if (vacantBottomRight(enemyFourCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyFourCurrentPosition += width
-  //         } else {
-  //           enemyFourCurrentPosition++
-  //         }
-  //       } else if (vacantBottom(enemyFourCurrentPosition)) {
-  //         enemyFourCurrentPosition += width
-  //       } else if (vacantRight(enemyFourCurrentPosition)) {
-  //         enemyFourCurrentPosition++
-  //       }
-  //     } else if (greaterThan(enemyFourCurrentPosition) && !greaterThanRow(enemyFourCurrentPosition)) {
-  //       if (vacantBottomLeft(enemyFourCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyFourCurrentPosition += width
-  //         } else {
-  //           enemyFourCurrentPosition--
-  //         }
-  //       } else if (vacantBottom(enemyFourCurrentPosition)) {
-  //         enemyFourCurrentPosition += width
-  //       } else if (vacantLeft(enemyFourCurrentPosition)) {
-  //         enemyFourCurrentPosition--
-  //       } else if (vacantRight(enemyFourCurrentPosition)) {
-  //         enemyFourCurrentPosition == width
-  //       }
-  //     } else if (!greaterThan(enemyFourCurrentPosition) && greaterThanRow(enemyFourCurrentPosition)) {
-  //       if (vacantTopRight(enemyFourCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyFourCurrentPosition -= width
-  //         } else {
-  //           enemyFourCurrentPosition++
-  //         }
-  //       } else if (vacantTop(enemyFourCurrentPosition)) {
-  //         enemyFourCurrentPosition -= width
-  //       } else if (vacantRight(enemyFourCurrentPosition)) {
-  //         enemyFourCurrentPosition++
-  //       }
-  //     } else if (!greaterThan(enemyFourCurrentPosition) && !greaterThanRow(enemyFourCurrentPosition)) {
-  //       if (vacantTopLeft(enemyFourCurrentPosition)) {
-  //         if (route < 2) {
-  //           enemyFourCurrentPosition -= width
-  //         } else {
-  //           enemyFourCurrentPosition--
-  //         }
-  //       } else if (vacantTop(enemyFourCurrentPosition)) {
-  //         enemyFourCurrentPosition -= width
-  //       } else if (vacantLeft(enemyFourCurrentPosition)) {
-  //         enemyFourCurrentPosition--
-  //       }
-  //     } else if (greaterThan(enemyFourCurrentPosition) && rowEqual(enemyFourCurrentPosition)) {
-  //       if (vacantBottom(enemyFourCurrentPosition)) {
-  //         enemyFourCurrentPosition += width
-  //       } else if (vacantLeftRight) {
-  //         if (route < 2) {
-  //           enemyFourCurrentPosition--
-  //         } else {
-  //           enemyFourCurrentPosition++
-  //         }
-  //       }
-  //     } else if (!greaterThan(enemyFourCurrentPosition) && rowEqual(enemyFourCurrentPosition)) {
-  //       if (vacantBottomTop(enemyFourCurrentPosition)) {
-  //         enemyFourCurrentPosition += width
-  //       } else if (vacantLeftRight) {
-  //         if (route < 2) {
-  //           enemyFourCurrentPosition--
-  //         } else {
-  //           enemyFourCurrentPosition++
-  //         }
-  //       }
-  //     }
-  //     addEnemyFour(enemyFourCurrentPosition)
-  //   }, outOfBoxSpeed)
-  // }
 
 
 
@@ -1122,15 +646,8 @@ const inTrapCharacterTopLeftGoRight = enemyCurrentPosition => enemyCurrentPositi
 
 
 
-  // window.addEventListener('load', enemyOneBoxOut)
   window.addEventListener('load', locateEnemy)
-  // window.addEventListener('load', enemyTwoBoxOut)
-  // window.addEventListener('load', enemyThreeBoxOut)
-  // window.addEventListener('load', enemyFourBoxOut)
 
-  window.addEventListener('load', inCaseOfDeath)
-  window.addEventListener('keydown', inCaseOfDeath)
-  window.addEventListener('keyup', inCaseOfDeath)
   window.addEventListener('mousemove', newHighNewColor)
   window.addEventListener('keydown', checkForWin)
 
