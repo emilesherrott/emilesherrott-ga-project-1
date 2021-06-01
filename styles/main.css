@@ -41,12 +41,20 @@ h1 {
   transform: translateX(20px);
   transition: 0.4s;
 }
+#next-round {
+  margin-top: 15px;
+  transition: 0.4s;
+}
+#next-round:hover {
+  cursor: pointer;
+  color: #aa1111;
+  transform: translateX(20px);
+  transition: 0.4s;
+}
 #created-by {
   margin-top: 100px;
 }
 #emile:hover {
-  cursor: pointer;
-  color: #1135aa;
   transform: translateX(20px);
   transition: 0.4s;
 }
@@ -71,12 +79,6 @@ h1 {
   font-family:'Courier New', Courier, monospace
 }
 #new-highscore {
-  transform: translateY(188px);
-  padding-left: 120px;
-  margin: 0px;
-}
-
-#next-round {
   transform: translateY(188px);
   padding-left: 120px;
   margin: 0px;
