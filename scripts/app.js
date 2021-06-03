@@ -296,7 +296,7 @@ function init() {
   function addEnemyTwo(position) {
     cells[position].classList.add(enemyTwoClass)
   }
-    function energizeEnemyTwo(position) {
+  function energizeEnemyTwo(position) {
     cells[position].classList.add(energizedClass)
   }
   function removeEnergizeEnemyTwo(position) {
@@ -424,11 +424,12 @@ function init() {
 
 
   function locateEnemyOne() {
-    
+
     const route = Math.floor(Math.random() * 12)
 
     removeEnergizeEnemyOne(enemyOneCurrentPosition)
     removeEnemyOne(enemyOneCurrentPosition)
+
     if (innerEnemyWallBottomLeft(enemyOneCurrentPosition) && spaceRightDoesNotContainEnemy) {
       enemyOneCurrentPosition += 1
     } else if (innerEnemyWallBottomRight(enemyOneCurrentPosition) && spaceLeftDoesNotContainEnemy) {
@@ -438,6 +439,8 @@ function init() {
     } else if (enemyWallsGateCurrent(enemyOneCurrentPosition) && spaceAboveDoesNotContainEnemy) {
       enemyOneCurrentPosition -= width
     }
+
+
     //* DIRECT BELOW
     else if (greaterThan(enemyOneCurrentPosition) && colEqual(enemyOneCurrentPosition)) {
       if (vacantBottom(enemyOneCurrentPosition) && spaceBelowDoesNotContainEnemy) {
@@ -543,7 +546,7 @@ function init() {
       }
     }
 
-
+    energizeTrigger()
     addEnemyOne(enemyOneCurrentPosition)
   }
 
@@ -681,6 +684,7 @@ function init() {
       }
     }
 
+    energizeTrigger()
     addEnemyTwo(enemyTwoCurrentPosition)
   }
 
@@ -702,9 +706,8 @@ function init() {
   //*ENEMY THREE
 
   function locateEnemyThree() {
-    removeEnergizeEnemyThree(enemyThreeCurrentPosition)
-
     const route = Math.floor(Math.random() * 12)
+    removeEnergizeEnemyThree(enemyThreeCurrentPosition)
     removeEnemyThree(enemyThreeCurrentPosition)
     if (innerEnemyWallBottomLeft(enemyThreeCurrentPosition) && spaceRightDoesNotContainEnemy) {
       enemyThreeCurrentPosition += 1
@@ -820,6 +823,7 @@ function init() {
       }
     }
 
+    energizeTrigger()
     addEnemyThree(enemyThreeCurrentPosition)
   }
 
@@ -844,7 +848,7 @@ function init() {
     const route = Math.floor(Math.random() * 12)
     const currentDate = new Date()
     currentDate.getMinutes()
-    removeEnergizeEnemyFour(enemyFourCurrentPosition)    
+    removeEnergizeEnemyFour(enemyFourCurrentPosition)
     removeEnemyFour(enemyFourCurrentPosition)
     if (currentDate.getMinutes() % 2 === 0) {
       if (innerEnemyWallBottomLeft(enemyFourCurrentPosition) && spaceRightDoesNotContainEnemy) {
@@ -1078,6 +1082,7 @@ function init() {
         }
       }
     }
+    energizeTrigger()
     addEnemyFour(enemyFourCurrentPosition)
   }
 
@@ -1112,15 +1117,12 @@ function init() {
   energizeUpThree()
   energizeUpFour()
       energizerArray = reducedEnergizerArray
-      console.log('condition met')
-      console.log(energizerArray)
     }
   }
-  
-  
+
+
   function energizeUpOne() {
     const energizeInterval = setInterval(() => {
-      console.log('reeeeached')
       energizeEnemyOne(enemyOneCurrentPosition)
     }
       , 1000)
@@ -1132,9 +1134,7 @@ function init() {
 
   function energizeUpTwo() {
     const energizeInterval = setInterval(() => {
-      console.log('reeeeached2')
       energizeEnemyTwo(enemyTwoCurrentPosition)
-      console.log(cells[enemyTwoCurrentPosition].classList)
     }
       , 1000)
     setTimeout(() => {
@@ -1291,7 +1291,9 @@ function init() {
 
   //*END GAME LOGIC - CHECK FOR DEATH
   function inCaseOfDeath() {
-    if (cells[characterCurrentPosition].classList.contains(enemyOneClass) || cells[characterCurrentPosition].classList.contains(enemyTwoClass) || cells[characterCurrentPosition].classList.contains(enemyThreeClass) || cells[characterCurrentPosition].classList.contains(enemyFourClass)) {
+    if (cells[characterCurrentPosition].classList.contains(energizedClass)) {
+      console.log('ennnnnnnnnnergy')
+    } else if (cells[characterCurrentPosition].classList.contains(enemyOneClass) || cells[characterCurrentPosition].classList.contains(enemyTwoClass) || cells[characterCurrentPosition].classList.contains(enemyThreeClass) || cells[characterCurrentPosition].classList.contains(enemyFourClass)) {
       characterLives > 1 || characterLives < 0 ? enemyHitAudio.play() : gameOverAudio.play()
       characterLives -= 1
       if (score > high) {
@@ -1403,7 +1405,7 @@ function init() {
 
 
 
-window.addEventListener('keydown', energizeTrigger)
+  // window.addEventListener('keydown', energizeTrigger)
   window.addEventListener('keydown', inCaseOfDeath)
   window.addEventListener('mousemove', newHighNewColor)
 
