@@ -3,6 +3,8 @@
 body {
   background-color: #ffcccc;
   font-family: 'Press Start 2P', cursive;
+  display: flex;
+  align-items: center;
 }
 main {
   display: flex;
@@ -25,7 +27,7 @@ h1 {
   align-items: flex-start;
 }
 .game-over-grid-wrapper-transition {
-  transform: translateY(1000px);
+  transform: translateY(1500px);
   transition: transform 3.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .game-over-grid-wrapper-display {
@@ -86,10 +88,46 @@ h1 {
 }
 /* COLUMN2 */
 .column2 {
+  display: flex;
+  flex-direction: column;
   margin-top: 104px;
   margin-left: 20px;
   max-width: 400px;
 }
+#bonus-information {
+  line-height: 1.2em;
+}
+/* HELP */
+.help-text {
+  position: absolute;
+  top: 70px;
+  right: 54px;
+}
+.help {
+  max-width: 400px;
+  position:fixed;
+  top: 356px;
+  line-height: 1.2em;
+}
+
+
+.help-show-tile {
+  position: absolute;
+  top: 60px;
+  right: 16px;
+  background-color: rgb(152, 66, 66);
+  height: 32px;
+  width: 32px;
+}
+.help-hide-tile {
+  position: absolute;
+  top: 60px;
+  right: 16px;
+  background-color: rgb(63, 138, 57);
+  height: 32px;
+  width: 32px;
+}
+
 
 
 /* SUB ELEMENTS */
@@ -139,7 +177,10 @@ p {
 
 /* BONUS ITEMS */
 .stations {
-  background-color: #0000;
+  background-color: #010101;
+}
+.finance-facts-one {
+  background-color: #ffcc00
 }
 .whitechapel-road {
   background-color: #8b4513;
@@ -147,11 +188,17 @@ p {
 .pentonville-road {
   background-color: #ADD8E6;
 }
+.finance-facts-two {
+  background-color: #ffcc00
+}
 .northumberland-avenue {
   background-color: #FF1493;
 }
 .vine-street {
   background-color: #FFA502;
+}
+.finance-facts-three {
+  background-color: #ffcc00
 }
 .trafalgar-square {
   background-color: #FF0100;
@@ -164,6 +211,9 @@ p {
 }
 .mayfair {
   background-color: #0000FF;
+}
+.finance-facts-four {
+  background-color: #ffcc00
 }
 
 
@@ -190,19 +240,134 @@ p {
 
 
 /* AUDIO */
-.sound {
+
+.audio-text {
+  position: absolute;
+  top: 25px;
+  right: 54px;
+}
+.sound-tile {
   position: absolute;
   top: 16px;
   right: 16px;
-  background-color: gray;
+  background-color: rgb(152, 66, 66);
   height: 32px;
   width: 32px;
 }
-.active {
+.active-tile {
   position: absolute;
   top: 16px;
   right: 16px;
-  background-color: goldenrod;
+  background-color: rgb(63, 138, 57);
   height: 32px;
   width: 32px;
+}
+
+
+
+
+
+
+
+
+@media only screen and (max-height: 660px) {
+  h1 {
+    display: none;
+  }
+  .column2 {
+    margin-top: 56px;
+  }
+  .help {
+    max-width: 400px;
+    position:fixed;
+    top: 306px;
+    line-height: 1.2em;
+  }
+}
+
+
+@media only screen and (max-width: 1000px) {
+  .help {
+    display: none;
+  }
+}
+
+
+
+@media only screen and (max-width: 1000px),
+screen and (max-height: 600px) {
+  main {
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+  }
+.column2, .help-text {
+  display: none;
+}
+.grid {
+  max-width: 336px;
+  min-width: 336px;
+  max-height: 372px;
+  min-height: 372px;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: center;
+  align-content: center;
+
+}
+.grid-piece {
+  max-width: 12px;
+  min-width: 12px;
+  max-height: 12px;
+  min-height: 12px;
+  font-size: 2.5px;
+  font-family:'Courier New', Courier, monospace
+}
+}
+
+@media only screen and (max-width: 600px) {
+  h1 {
+    display: none;
+  }
+}
+
+
+
+@media only screen and (max-width: 480px) {
+  body {
+    height: 350px;
+  }
+  .grid {
+    max-width: 224px;
+    min-width: 224px;
+    max-height: 248px;
+    min-height: 248px;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+  }
+  .grid-piece {
+    max-width: 8px;
+    min-width: 8px;
+    max-height: 8px;
+    min-height: 8px;
+  }
+  p {
+    font-size: 0.7em;
+  }
+  .heart {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .audio-text, .sound-tile {
+    display: none;
+  }
 }

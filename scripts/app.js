@@ -25,15 +25,22 @@ function init() {
   const heart2 = document.querySelector('#heart2')
   const heart3 = document.querySelector('#heart3')
 
+  //*HELP FUNCTION
+  const columnTwo = document.querySelector('.column2')
+  const helpShowTile = document.querySelector('.help-show-tile')
+  const helpHideTile = document.querySelector('.help-hide-tile')
+  const help = document.querySelector('.help')
+  help.style.display = 'none'
 
 
 
   //*AUDIO FUNCTIONALITY
-  const audioButton = document.querySelector('.sound')
+  const audioButton = document.querySelector('.sound-tile')
   const mainAudio = new Audio('audio/background.mp3')
   const collectEnergizerAudio = new Audio('audio/energize.wav')
   const collectBonusAudio = new Audio('audio/bonus.wav')
   const enemyHitAudio = new Audio('audio/enemy-hit.wav')
+  const enemyEatenAudio = new Audio('audio/enemy-eaten.wav')
   const gameOverAudio = new Audio('audio/game-over.wav')
   const gameWonAudio = new Audio('audio/jingle-win.wav')
 
@@ -100,7 +107,7 @@ function init() {
   let energizedClass = 'character-energized'
 
   //*ENEMY SPEED VARIABLE
-  let initialSpeed = 1000
+  let initialSpeed = 800
 
 
 
@@ -110,6 +117,7 @@ function init() {
   createGrid(characterStartPosition, enemyOneStartPosition, enemyTwoStartPosition, enemyThreeStartPosition, enemyFourStartPosition)
   addEnergize()
   addSurface()
+
 
 
   function addCharacter(position) {
@@ -149,7 +157,6 @@ function init() {
   function energize() {
     if (cells[characterCurrentPosition].classList.contains('energizer')) {
       cells[characterCurrentPosition].classList.remove('energizer')
-      collectEnergizerAudio.play()
       score += 90
     }
     currentScore.innerText = score
@@ -173,7 +180,7 @@ function init() {
 
   //*RANDOM ITEM SPAWN & ARRAY FACTS
   function bonusItem() {
-    const bonusArray = ['stations', 'whitechapel-road', 'pentonville-road', 'northumberland-avenue', 'vine-street', 'trafalgar-square', 'piccadilly', 'bond-street', 'mayfair']
+    const bonusArray = ['stations', 'finance-facts-one', 'whitechapel-road', 'pentonville-road', 'finance-facts-two', 'northumberland-avenue', 'vine-street', 'finance-facts-three', 'trafalgar-square', 'piccadilly', 'bond-street', 'mayfair', 'finance-facts-four']
     let randomChoice = bonusArray[Math.floor(Math.random() * 9)]
     if (cells[461].classList.length <= 1) {
       cells[461].classList.add(randomChoice)
@@ -184,7 +191,6 @@ function init() {
 
   function removeBonus(bonusName) {
     cells[461].classList.remove(bonusName)
-    score += 30
     collectBonusAudio.play()
   }
   function bonusPoints() {
@@ -192,13 +198,23 @@ function init() {
 
     if (characterCurrentPosition === 461 && cells[461].classList.contains('stations')) {
       cells[461].classList.remove('stations')
+      score += 200
       removeBonus('stations')
       const stationFacts = [`Liverpool Street served over 65 million passengers in 2019`, `The land where Kings Cross Station stands originally cost £65,000. The stations recent refurbishments cost £650 million`, `Kings Cross St. Pancras Station is the most well connected underground station in the network, accomidating six lines.`]
       bonusInformation.innerText = stationFacts[choice]
     }
 
+    else if (characterCurrentPosition === 461 && cells[461].classList.contains('finance-facts-one')) {
+      cells[461].classList.remove('finance-facts-one')
+      score += 200
+      removeBonus('finance-facts-one')
+      const financeFactsOne = [`Save little and often, you'll see savings rise quickly!`, `Review where the money you spend is going.`, `You're more likely to spend more money on multiple lower quality items than a few quality purchases`]
+      bonusInformation.innerText = financeFactsOne[choice]
+    }
+
     else if (characterCurrentPosition === 461 && cells[461].classList.contains('whitechapel-road')) {
       cells[461].classList.remove('whitechapel-road')
+      score += 60
       removeBonus('whitechapel-road')
       const whitechapelRoadFacts = [`Old Street is the only Monopoly location south of the River Thames`, `Old Street is the only Monopoly location outside && more than one stop away from the Circle Line`, `Whitechapel Road is named after a small chapel dedicaed to St Mary`]
       bonusInformation.innerText = whitechapelRoadFacts[choice]
@@ -206,33 +222,55 @@ function init() {
 
     else if (characterCurrentPosition === 461 && cells[461].classList.contains('pentonville-road')) {
       cells[461].classList.remove('pentonville-road')
+      score += 120
       removeBonus('pentonville-road')
       const pentonvilleRoadFascts = [`The Angel, Islington, is a historic landmark and a series of buildings`, `Pentonville Road was built mid 18th century and became known for numerous factories following the arrival of London railways`, `When first built Euston Road was built using more than 10 million bricks`]
       bonusInformation.innerText = pentonvilleRoadFascts[choice]
     }
 
+    else if (characterCurrentPosition === 461 && cells[461].classList.contains('finance-facts-two')) {
+      cells[461].classList.remove('finance-facts-two')
+      score += 200
+      removeBonus('finance-facts-two')
+      const financeFactsTwo = [`You gain more happiness by spending on experiences than material objects`, `Having all of your money in one place may make it harder to avoid spending your savings - try having a few spaces to save money`, `If you want something, you'll still want it after waiting 24 hours!`]
+      bonusInformation.innerText = financeFactsTwo[choice]
+    }
+
     else if (characterCurrentPosition === 461 && cells[461].classList.contains('northumberland-avenue')) {
       cells[461].classList.remove('northumberland-avenue')
       removeBonus('northumberland-avenue')
+      score += 160
       const northumberlandAvenueFacts = [`Northumberland Avenue was built to accomodate luxury hotels`, `The average price of a house in Whitehall is £1,012,502. Compared to 100 Monopoly Dollars`, `The name Pall Mall is derived from a 17th centry ball game called 'pall-mall'`]
       bonusInformation.innerText = northumberlandAvenueFacts[choice]
     }
 
     else if (characterCurrentPosition === 461 && cells[461].classList.contains('vine-street')) {
       cells[461].classList.remove('vine-street')
+      score += 180
       removeBonus('vine-street')
       const vineStreetFacts = [`Vine Street - the shortest street on the Monopoly Board - only 70 feet.`, `There is no actual Marlborough Street in this part of London, it was misnamed after Malborough Street Magistrates Court`, `Vine Street is named after the 18th Century public house, 'The Vine' which inturn may have been named after a Roman time vineyard which existed in the area`]
       bonusInformation.innerText = vineStreetFacts[choice]
     }
 
+    else if (characterCurrentPosition === 461 && cells[461].classList.contains('finance-facts-three')) {
+      cells[461].classList.remove('finance-facts-three')
+      score += 200
+      removeBonus('finance-facts-three')
+      const financeFactsThree = [`Streamline your spending and look for savings on Energy Bills, Broadband, Mobile etc..`, `Have your employer match your maximum pension contributions if you don't have other pension plans`, `50/30/20 budget rule: \n 50% - necessities \n 30% - wants \n 20% - long-term ambition \n Sort your own budget out and stick to it`]
+      bonusInformation.innerText = financeFactsThree[choice]
+
+    }
+
     else if (characterCurrentPosition === 461 && cells[461].classList.contains('trafalgar-square')) {
       cells[461].classList.remove('trafalgar-square')
+      score += 240
       removeBonus('trafalgar-square')
       const trafalgarSquareFacts = [`Fleet Street became famous for print and publishing, by the 20th century most British national newspapers operated from here.`, `Strand was the first road in London to have a numbered address`, `Trafalgar Squares Lions were made from melted cannons`]
       bonusInformation.innerText = trafalgarSquareFacts[choice]
 
     } else if (characterCurrentPosition === 461 && cells[461].classList.contains('piccadilly')) {
       cells[461].classList.remove('piccadilly')
+      score += 280
       removeBonus('piccadilly')
       const piccadillyFacts = [`In 1612 Robert Baker made his wealth from the sale of Picadils, stiff collars worn the fashionable men in court, his house derisively become known as Picadil Hall, located in the area we now know as Piccadilly Circus.`, `The adverts at Piccadilly Circus have been turned off twice: the funerals of Winston Churchill and Princess Diana`, `The 'circus' refers to it's a circle... or roundabout`]
       bonusInformation.innerText = piccadillyFacts[choice]
@@ -240,21 +278,28 @@ function init() {
 
     } else if (characterCurrentPosition === 461 && cells[461].classList.contains('bond-street')) {
       cells[461].classList.remove('bond-street')
+      score += 320
       removeBonus('bond-street')
       const bondStreetFacts = [`There is no actual bond street, it's split into New / Old Bond Street`, `Oxford Street is Europes biggest shopping street, with around half a million daily visitors`, `Hamleys toy store is the oldest operating business of Regend Street`]
       bonusInformation.innerText = bondStreetFacts[choice]
 
 
     } else if (characterCurrentPosition === 461 && cells[461].classList.contains('mayfair')) {
-      removeBonus('property')
       cells[461].classList.remove('mayfair')
+      score += 400
+      removeBonus('mayfair')
       const mayfairFacts = [`Real house prices in Mayfair aren't 200 Monolopoly Dollars, they average £2,584,791`, `Like Monopoly, Mayfair, City of Westminster is London's most expensive borough. Here you'll find Savile Row and Burlington Arcade`, `Mayfair is named after the annual fortnight-long 'May Fair' that ran between 1686 and 1764`]
       bonusInformation.innerText = mayfairFacts[choice]
     }
+
+    else if (characterCurrentPosition === 461 && cells[461].classList.contains('finance-facts-four')) {
+      cells[461].classList.remove('finance-facts-four')
+      score += 200
+      removeBonus('finance-facts-four')
+      const financeFactsFour = [`Stash spare cash... it's EASY to spend`, `Prepping food or having a routine will make it easier to avoid splashing on your favourite Deliveroo take-away`, `Prioritise getting out of overdraft and credit repayments`]
+      bonusInformation.innerText = financeFactsFour[choice]
+    }
   }
-
-
-
 
 
 
@@ -545,7 +590,6 @@ function init() {
         enemyOneCurrentPosition = enemyOneCurrentPosition
       }
     }
-
     energizeTrigger()
     addEnemyOne(enemyOneCurrentPosition)
   }
@@ -1096,6 +1140,7 @@ function init() {
     locateEnemyFour()
     checkForWin()
     inCaseOfDeath()
+    energizeTrigger()
   }, initialSpeed)
 
 
@@ -1112,10 +1157,11 @@ function init() {
       const reducedEnergizerArray = energizerArray.filter(item => {
         return item !== characterCurrentPosition
       })
-  energizeUpOne()
-  energizeUpTwo()
-  energizeUpThree()
-  energizeUpFour()
+      collectEnergizerAudio.play()
+      energizeUpOne()
+      energizeUpTwo()
+      energizeUpThree()
+      energizeUpFour()
       energizerArray = reducedEnergizerArray
     }
   }
@@ -1125,10 +1171,11 @@ function init() {
     const energizeInterval = setInterval(() => {
       energizeEnemyOne(enemyOneCurrentPosition)
     }
-      , 1000)
+      , 1)
     setTimeout(() => {
+      clearInterval(energizeInterval)
       removeEnergizeEnemyOne(enemyOneCurrentPosition)
-      clearInterval(energizeInterval)}, 8000)
+    }, 8000)
   }
 
 
@@ -1136,10 +1183,11 @@ function init() {
     const energizeInterval = setInterval(() => {
       energizeEnemyTwo(enemyTwoCurrentPosition)
     }
-      , 1000)
+      , 1)
     setTimeout(() => {
+      clearInterval(energizeInterval)
       removeEnergizeEnemyTwo(enemyTwoCurrentPosition)
-      clearInterval(energizeInterval)}, 8000)
+    }, 8000)
   }
 
 
@@ -1147,20 +1195,22 @@ function init() {
     const energizeInterval = setInterval(() => {
       energizeEnemyThree(enemyThreeCurrentPosition)
     }
-      , 1000)
+      , 1)
     setTimeout(() => {
+      clearInterval(energizeInterval)
       removeEnergizeEnemyThree(enemyThreeCurrentPosition)
-      clearInterval(energizeInterval)}, 8000)
+    }, 8000)
   }
 
   function energizeUpFour() {
     const energizeInterval = setInterval(() => {
       energizeEnemyFour(enemyFourCurrentPosition)
     }
-      , 1000)
+      , 1)
     setTimeout(() => {
+      clearInterval(energizeInterval)
       removeEnergizeEnemyFour(enemyFourCurrentPosition)
-      clearInterval(energizeInterval)}, 8000)
+    }, 8000)
   }
 
 
@@ -1253,6 +1303,9 @@ function init() {
     resetBoard()
     addSurface()
     addEnergize()
+    nextRound.style.display = 'none'
+    createdBy.style.display = 'none'
+    newHighscore.style.display = 'none'
 
     const secondInterval = setInterval(() => {
       locateEnemyOne()
@@ -1261,7 +1314,8 @@ function init() {
       locateEnemyFour()
       checkForSecondWin()
       inCaseOfSecondDeath()
-    }, 500);
+      energizeTrigger()
+    }, 300);
 
 
 
@@ -1284,15 +1338,33 @@ function init() {
 
 
 
-
-
-
+  function energizeEat() {
+    enemyEatenAudio.play()
+    if (cells[enemyOneCurrentPosition].classList.contains(characterClass)) {
+      removeEnemyOne(enemyOneCurrentPosition)
+      removeEnergizeEnemyOne(enemyOneCurrentPosition)
+      enemyOneCurrentPosition = 376
+    } else if (cells[enemyTwoCurrentPosition].classList.contains(characterClass)) {
+      removeEnemyTwo(enemyTwoCurrentPosition)
+      removeEnergizeEnemyTwo(enemyTwoCurrentPosition)
+      enemyOneCurrentPosition = 377
+    } else if (cells[enemyThreeCurrentPosition].classList.contains(characterClass)) {
+      removeEnemyThree(enemyThreeCurrentPosition)
+      removeEnergizeEnemyThree(enemyThreeCurrentPosition)
+      enemyThreeCurrentPosition = 378
+    } else if (cells[enemyFourCurrentPosition].classList.contains(characterClass)) {
+      removeEnemyFour(enemyFourCurrentPosition)
+      removeEnergizeEnemyFour(enemyFourCurrentPosition)
+      enemyFourCurrentPosition = 379
+    }
+    score += 200
+  }
 
 
   //*END GAME LOGIC - CHECK FOR DEATH
   function inCaseOfDeath() {
     if (cells[characterCurrentPosition].classList.contains(energizedClass)) {
-      console.log('ennnnnnnnnnergy')
+      energizeEat()
     } else if (cells[characterCurrentPosition].classList.contains(enemyOneClass) || cells[characterCurrentPosition].classList.contains(enemyTwoClass) || cells[characterCurrentPosition].classList.contains(enemyThreeClass) || cells[characterCurrentPosition].classList.contains(enemyFourClass)) {
       characterLives > 1 || characterLives < 0 ? enemyHitAudio.play() : gameOverAudio.play()
       characterLives -= 1
@@ -1376,13 +1448,38 @@ function init() {
   //*AUDIO SETTINGS
   function playMusic() {
     mainAudio.play()
-    audioButton.classList.toggle('active')
+    audioButton.classList.toggle('active-tile')
     window.removeEventListener('keydown', playMusic)
   }
   function togglePlay() {
     mainAudio.paused ? mainAudio.play() : mainAudio.pause()
-    audioButton.classList.toggle('active')
+    audioButton.classList.toggle('active-tile')
   }
+
+
+  //*HELP SETTINGS
+
+
+
+
+  function showHelp() {
+    help.style.display = 'block'
+    columnTwo.removeChild(helpShowTile)
+    columnTwo.appendChild(helpHideTile)
+  }
+  function hideHelp() {
+    help.style.display = 'none'
+
+
+
+    columnTwo.removeChild(helpHideTile)
+    columnTwo.appendChild(helpShowTile)
+  }
+
+
+
+
+
 
 
   function reload() {
@@ -1404,8 +1501,6 @@ function init() {
   document.addEventListener('keyup', bonusPoints)
 
 
-
-  // window.addEventListener('keydown', energizeTrigger)
   window.addEventListener('keydown', inCaseOfDeath)
   window.addEventListener('mousemove', newHighNewColor)
 
@@ -1413,8 +1508,9 @@ function init() {
   playAgain.addEventListener('click', reload)
   nextRound.addEventListener('click', progressRound)
   audioButton.addEventListener('click', togglePlay)
+  helpShowTile.addEventListener('click', showHelp)
+  helpHideTile.addEventListener('click', hideHelp)
   window.addEventListener('keydown', playMusic)
-
 
 
 
