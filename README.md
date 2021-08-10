@@ -7,6 +7,7 @@ I chose this project due to the recognition PacMan and Monopoly already has and 
 ### Overview
 Project 1 | Brief
 -------------|--------------
+Name | LndOplyFinFacts
 Skills | HTML5, CSS3, JavaScript
 Time Frame | 1 Week
 Team Members | Individual Task
