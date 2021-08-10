@@ -13,9 +13,8 @@ Time Frame | 1 Week
 Team Members | Individual Task
 
 ### Setting up on a local machine
-1. Clone to repository onto your local machine
+1. Clone to repository onto your local machine and do either:
   * In your terminal run `git clone git@github.com:emilesherrott/emilesherrott-ga-project-1.git`
-  * OR
   * Download the emilesherrott-ga-project-1.zip file and open in your prefered code editor. 
 2. Right click on **index.html** and click: Open in default browser. 
 
