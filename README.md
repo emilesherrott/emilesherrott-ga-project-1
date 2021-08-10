@@ -5,7 +5,7 @@ Based on a combination of the classic arcade game PacMan and the board game Mono
 I chose this project due to the recognition PacMan and Monopoly already has and the opportunity I'd have to learn, research and problem solve what was presented as a difficult game to try and code. <br />
 
 ### Overview
-Brief | Feature
+Project 1 | Brief
 -------------|--------------
 Skills | HTML5, CSS3, JavaScript
 Time Frame | 1 Week
