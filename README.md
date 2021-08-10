@@ -1,5 +1,5 @@
 # emilesherrott-ga-project-1
-## LndOplyFinFcts
+## [LndOplyFinFcts](https://emilesherrott.github.io/emilesherrott-ga-project-1/)
 [LdnOplyFinFacts](https://emilesherrott.github.io/emilesherrott-ga-project-1/)
 
 https://emilesherrott.github.io/emilesherrott-ga-project-1/ - automatic! [LndOplyFinFcts] (https://emilesherrott.github.io/emilesherrott-ga-project-1/)
