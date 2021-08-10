@@ -1,6 +1,7 @@
 # emilesherrott-ga-project-1
 ## LndOplyFinFcts
 [LdnOplyFinFacts](https://emilesherrott.github.io/emilesherrott-ga-project-1/)
+
 https://emilesherrott.github.io/emilesherrott-ga-project-1/ - automatic! [LndOplyFinFcts] (https://emilesherrott.github.io/emilesherrott-ga-project-1/)
 One Paragraph of project description goes here
 
