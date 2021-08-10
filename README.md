@@ -14,9 +14,9 @@ Team Members | Individual Task
 
 ### Setting up on a local machine
 1. Clone to repository onto your local machine and do either:
-  * In your terminal run `git clone git@github.com:emilesherrott/emilesherrott-ga-project-1.git`
-  * Download the emilesherrott-ga-project-1.zip file and open in your prefered code editor. 
-1. Right click on **index.html** and click: Open in default browser. 
+   * In your terminal run `git clone git@github.com:emilesherrott/emilesherrott-ga-project-1.git`
+   * Download the emilesherrott-ga-project-1.zip file and open in your prefered code editor. 
+4. Right click on **index.html** and click: Open in default browser. 
 
 
 Getting Started
