@@ -1,9 +1,9 @@
 # emilesherrott-ga-project-1
 ## [LndOplyFinFcts](https://emilesherrott.github.io/emilesherrott-ga-project-1/)
-[LdnOplyFinFacts](https://emilesherrott.github.io/emilesherrott-ga-project-1/)
+### Project Description
+Based on a combination of the classic arcade game PacMan and the board game Monopoly, LndOplyFinFacts expands on it's precusors game machinaics and merges in financial facts and tips to the benefit and interest of the player. 
+This project was developed using HTML5, CSS3 and JavaScript. 
 
-https://emilesherrott.github.io/emilesherrott-ga-project-1/ - automatic! [LndOplyFinFcts] (https://emilesherrott.github.io/emilesherrott-ga-project-1/)
-One Paragraph of project description goes here
 
 Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
