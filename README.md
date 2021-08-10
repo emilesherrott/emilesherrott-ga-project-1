@@ -2,7 +2,7 @@
 ## [LndOplyFinFcts](https://emilesherrott.github.io/emilesherrott-ga-project-1/)
 ### Project Description
 Based on a combination of the classic arcade game PacMan and the board game Monopoly, LndOplyFinFacts expands on it's precusors game machinaics and merges in financial facts and tips to the benefit and interest of the player. 
-This project was developed using HTML5, CSS3 and JavaScript. 
+  This project was developed using HTML5, CSS3 and JavaScript. 
 
 
 Getting Started
