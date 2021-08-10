@@ -1,1 +1,1 @@
-# sei-project1
+# emilesherrott-ga-project-1
