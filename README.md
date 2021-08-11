@@ -13,12 +13,12 @@ Skills | HTML5, CSS3, JavaScript, Git, GitHub
 Deployment | GitHub Pages
 
 ### Table of Contents  
-*[Setting up on a local machine](#anchor-1)
-*[Project Approach](#anchor-2)
-*[Project Challenges](#anchor-3)
-*[Project Bugs](#anchor-4)
-*[Project Learning Outcomes](#anchor-5)
-*[Acknowledgements](#anchor-6)
+* [Setting up on a local machine](#anchor-1)
+* [Project Approach](#anchor-2)
+* [Project Challenges](#anchor-3)
+* [Project Bugs](#anchor-4)
+* [Project Learning Outcomes](#anchor-5)
+* [Acknowledgements](#anchor-6)
 
 
 ### Setting up on a local machine <a id="anchor-1"></a>
