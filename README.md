@@ -21,8 +21,10 @@ Deployment | GitHub Pages
    * Running `git clone git@github.com:emilesherrott/emilesherrott-ga-project-1.git` from your terminal. 
    * Downloading the emilesherrott-ga-project-1.zip file and open in your prefered code editor. 
 2. Right click on **index.html** and click: Open in default browser. 
+#anchor-1
 
 ### Project Approach #Anchor 2
+#anchor-2
 
 ### Project Challenges
 
