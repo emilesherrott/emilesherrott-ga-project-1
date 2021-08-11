@@ -12,7 +12,8 @@ Time Frame | 7 Days
 Skills | HTML5, CSS3, JavaScript, Git, GitHub
 Deployment | GitHub Pages
 
-![ Alt text](emilesherrott-ga-project-1-gif.gif) / ! [](emilesherrott-ga-project-1-gif.gif)
+### Preview
+![ Alt text](emilesherrott-ga-project-1-gif.gif) [](emilesherrott-ga-project-1-gif.gif)
 
 ### Table of Contents  
 * [Setting up on a local machine](#anchor-1)
