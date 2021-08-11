@@ -20,7 +20,7 @@ Deployment | GitHub Pages
 * [Project Learning Outcomes](#anchor-5)
 * [Acknowledgements](#anchor-6)
 
-![ Alt text](emilesherrott-ga-project-1-gif. gif) / ! [](emilesherrott-ga-project-1-gif. gif)
+![ Alt text](emilesherrott-ga-project-1-gif.gif) / ! [](emilesherrott-ga-project-1-gif.gif)
 
 ### Setting up on a local machine <a id="anchor-1"></a>
 1. Clone to repository onto your local machine by either:
