@@ -107,7 +107,7 @@ function init() {
   let energizedClass = 'character-energized'
 
   //*ENEMY SPEED VARIABLE
-  let initialSpeed = 800
+  let initialSpeed = 1000
 
 
 
@@ -1170,11 +1170,13 @@ function init() {
   function energizeUpOne() {
     const energizeInterval = setInterval(() => {
       energizeEnemyOne(enemyOneCurrentPosition)
+      removeEnemyOne(enemyOneCurrentPosition)
     }
       , 1)
     setTimeout(() => {
       clearInterval(energizeInterval)
       removeEnergizeEnemyOne(enemyOneCurrentPosition)
+      addEnemyOne(enemyOneCurrentPosition)
     }, 8000)
   }
 
@@ -1182,11 +1184,13 @@ function init() {
   function energizeUpTwo() {
     const energizeInterval = setInterval(() => {
       energizeEnemyTwo(enemyTwoCurrentPosition)
+      removeEnemyTwo(enemyTwoCurrentPosition)
     }
       , 1)
     setTimeout(() => {
       clearInterval(energizeInterval)
       removeEnergizeEnemyTwo(enemyTwoCurrentPosition)
+      addEnemyTwo(enemyTwoCurrentPosition)
     }, 8000)
   }
 
@@ -1194,24 +1198,28 @@ function init() {
   function energizeUpThree() {
     const energizeInterval = setInterval(() => {
       energizeEnemyThree(enemyThreeCurrentPosition)
+      removeEnemyThree(enemyThreeStartPosition)
     }
       , 1)
     setTimeout(() => {
       clearInterval(energizeInterval)
       removeEnergizeEnemyThree(enemyThreeCurrentPosition)
+      addEnemyThree(enemyThreeCurrentPosition)
     }, 8000)
   }
 
   function energizeUpFour() {
     const energizeInterval = setInterval(() => {
       energizeEnemyFour(enemyFourCurrentPosition)
-    }
-      , 1)
+      removeEnemyFour(enemyFourCurrentPosition)
+
     setTimeout(() => {
       clearInterval(energizeInterval)
       removeEnergizeEnemyFour(enemyFourCurrentPosition)
+      addEnemyFour(enemyFourCurrentPosition)
     }, 8000)
-  }
+  })
+}
 
 
 
@@ -1316,8 +1324,6 @@ function init() {
       inCaseOfSecondDeath()
       energizeTrigger()
     }, 300);
-
-
 
 
     bonusInformation.style.display = 'block'
@@ -1502,6 +1508,7 @@ function init() {
 
 
   window.addEventListener('keydown', inCaseOfDeath)
+  window.addEventListener('keydown', inCaseOfSecondDeath)
   window.addEventListener('mousemove', newHighNewColor)
 
 
