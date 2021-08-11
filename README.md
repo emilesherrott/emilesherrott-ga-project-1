@@ -12,7 +12,7 @@ Time Frame | 7 Days
 Skills | HTML5, CSS3, JavaScript, Git, GitHub
 Deployment | GitHub Pages
 
-###Table of Contents
+### Table of Contents  
 [Setting up on a local machine](#anchor-1)
 ### Setting up on a local machine(#anchor-1)
 1. Clone to repository onto your local machine by either:
