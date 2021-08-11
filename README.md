@@ -7,10 +7,10 @@ I chose this project due to the recognition PacMan and Monopoly already has and 
 ### Overview
 Project 1 | Brief
 -------------|--------------
-Name | LndOplyFinFacts
-Skills | HTML5, CSS3, JavaScript, Git, GitHub
-Time Frame | 1 Week
 Participants | Individual Task
+Time Frame | 1 Week
+Skills | HTML5, CSS3, JavaScript, Git, GitHub
+Deployment | GitHub Pages
 
 ### Setting up on a local machine
 1. Clone to repository onto your local machine by either:
