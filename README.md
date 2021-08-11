@@ -8,7 +8,7 @@ I chose this project due to the recognition PacMan and Monopoly already has and 
 Project 1 | Brief
 -------------|--------------
 Participants | Individual Task
-Time Frame | 1 Week
+Time Frame | 7 Days
 Skills | HTML5, CSS3, JavaScript, Git, GitHub
 Deployment | GitHub Pages
 
