@@ -26,4 +26,4 @@ Participants | Individual Task
 
 ### What was learnt from building emilesherrott-ga-project-1
 
-### Acknowledgements
+### Acknowledgements 
