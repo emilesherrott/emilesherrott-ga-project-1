@@ -12,7 +12,9 @@ Time Frame | 7 Days
 Skills | HTML5, CSS3, JavaScript, Git, GitHub
 Deployment | GitHub Pages
 
-### Setting up on a local machine
+###Table of Contents
+[Setting up on a local machine](#anchor-1)
+### Setting up on a local machine(#anchor-1)
 1. Clone to repository onto your local machine by either:
    * Running `git clone git@github.com:emilesherrott/emilesherrott-ga-project-1.git` from your terminal. 
    * Downloading the emilesherrott-ga-project-1.zip file and open in your prefered code editor. 
